@@ -6,13 +6,16 @@
  */
 #include <iostream>
 
+const std::size_t DATA_SIZE = 100000;
+
+
 void process_array_on_stack() {
-	int data[5];
-	for (std::size_t i = 0; i<5; i++) {
+	int data[DATA_SIZE];
+	for (std::size_t i = 0; i<DATA_SIZE; i++) {
 		data[i] = i*5+3;
 	}
 
-	for (std::size_t i = 0; i<5; i++) {
+	for (std::size_t i = 0; i<DATA_SIZE; i++) {
 		std::cout<<"data["<<i<<"]="<<data[i]<<std::endl;
 	}
 }
