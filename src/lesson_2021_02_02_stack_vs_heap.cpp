@@ -33,11 +33,34 @@ void process_array_on_heap() {
 	print_array(data, DATA_SIZE);
 }
 
+// will result in compiler warning
+//int* create_array_on_stack() {
+//	int data[DATA_SIZE];
+//	for (std::size_t i = 0; i<DATA_SIZE; i++) {
+//		data[i] = i*5+3;
+//	}
+//
+//	return data;
+//}
+
+int* create_array_on_heap() {
+	int* data = new int[DATA_SIZE];
+	for (std::size_t i = 0; i<DATA_SIZE; i++) {
+		data[i] = i*5+3;
+	}
+
+	return data;
+}
+
 int main() {
 	std::cout<<"stack:"<<std::endl;
-	process_array_on_stack();
+	//ERROR: can't return address of local variable
+	//int * result_data = create_array_on_stack();
+	//print_array(result_data, DATA_SIZE);
+
 	std::cout<<"heap:"<<std::endl;
-	process_array_on_heap();
+	int * result_data = create_array_on_heap();
+	print_array(result_data, DATA_SIZE);
 	return 0;
 }
 
