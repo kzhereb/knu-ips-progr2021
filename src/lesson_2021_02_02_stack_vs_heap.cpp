@@ -6,10 +6,11 @@
  */
 #include <iostream>
 
-const std::size_t DATA_SIZE = 100000;
+const std::size_t DATA_SIZE = 10000000;
 
 void print_array(int* data, std::size_t data_size) {
-	for (std::size_t i = 0; i < data_size; i++) {
+	std::size_t output_size = data_size < 10 ? data_size : 10;
+	for (std::size_t i = 0; i < output_size; i++) {
 		std::cout << "data[" << i << "]=" << data[i] << std::endl;
 	}
 }
@@ -59,8 +60,12 @@ int main() {
 	//print_array(result_data, DATA_SIZE);
 
 	std::cout<<"heap:"<<std::endl;
-	int * result_data = create_array_on_heap();
-	print_array(result_data, DATA_SIZE);
+//	int * result_data = create_array_on_heap();
+//	print_array(result_data, DATA_SIZE);
+
+	while(true) {
+		process_array_on_heap();
+	}
 	return 0;
 }
 
