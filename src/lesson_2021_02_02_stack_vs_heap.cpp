@@ -8,8 +8,8 @@
 
 const std::size_t DATA_SIZE = 100000;
 
-void print_array(int* data) {
-	for (std::size_t i = 0; i < DATA_SIZE; i++) {
+void print_array(int* data, std::size_t data_size) {
+	for (std::size_t i = 0; i < data_size; i++) {
 		std::cout << "data[" << i << "]=" << data[i] << std::endl;
 	}
 }
@@ -20,7 +20,7 @@ void process_array_on_stack() {
 		data[i] = i*5+3;
 	}
 
-	print_array(data);
+	print_array(data, DATA_SIZE);
 }
 
 
@@ -30,7 +30,7 @@ void process_array_on_heap() {
 		data[i] = i*5+3;
 	}
 
-	print_array(data);
+	print_array(data, DATA_SIZE);
 }
 
 int main() {
