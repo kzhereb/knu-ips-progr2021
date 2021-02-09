@@ -6,6 +6,8 @@
  */
 #include <iostream>
 
+namespace lesson_2021_02_02_stack_vs_heap {
+
 const std::size_t DATA_SIZE = 10000000;
 
 void print_array(int* data, std::size_t data_size) {
@@ -68,4 +70,4 @@ int main() {
 	}
 	return 0;
 }
-
+}
