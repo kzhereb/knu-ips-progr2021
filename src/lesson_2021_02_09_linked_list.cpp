@@ -29,6 +29,7 @@ struct DoublyLinkedList {
 			new_item->data = data;
 			new_item->prev = this->end;
 			new_item->next = nullptr;
+			this->end->next = new_item;
 			this->end = new_item;
 			return new_item;
 		} else { // list is empty
@@ -38,6 +39,15 @@ struct DoublyLinkedList {
 			this->begin = this->end = new_item;
 			return new_item;
 		}
+	}
+
+	void print() {
+		ListNode* current = begin;
+		while (current) {
+			std::cout<<current->data<<" ";
+			current = current->next;
+		}
+		std::cout<<std::endl;
 	}
 };
 
@@ -49,6 +59,8 @@ int main() {
 	ListNode * last_added = my_list.add(123);
 	std::cout<<"last item data is "<<last_added->data<<"; prev data is "<<last_added->prev->data<<std::endl;
 	std::cout<<"last item data is "<<my_list.end->data<<"; prev data is "<<my_list.end->prev->data<<std::endl;
+	my_list.print();
+	std::cout<<my_list.begin->next;
 	return 0;
 }
 
