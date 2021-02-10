@@ -10,7 +10,7 @@ struct ListNode {
 	int data;
 	ListNode* prev;
 	ListNode* next;
-	ListNode(int data, ListNode* prev, ListNode* next) {
+	ListNode(int data, ListNode* prev = nullptr, ListNode* next = nullptr) {
 		this->data = data;
 		this->prev = prev;
 		this->next = next;
@@ -30,12 +30,12 @@ struct DoublyLinkedList {
 
 	ListNode* add(int data) {
 		if (end) { // list is not empty
-			ListNode* new_item = new ListNode(data, this->end, nullptr);
+			ListNode* new_item = new ListNode(data, this->end);
 			this->end->next = new_item;
 			this->end = new_item;
 			return new_item;
 		} else { // list is empty
-			ListNode* new_item = new ListNode(data, nullptr, nullptr);
+			ListNode* new_item = new ListNode(data);
 			this->begin = this->end = new_item;
 			return new_item;
 		}
