@@ -44,8 +44,16 @@ struct DoublyLinkedList {
 		ListNode* current = begin;
 		while (current) {
 			if (current->data == data_to_remove) {
-				current->prev->next = current->next;
-				current->next->prev = current->prev;
+				if (current->prev) {
+					current->prev->next = current->next;
+				} else {
+					this->begin = current->next;
+				}
+				if (current->next) {
+					current->next->prev = current->prev;
+				} else {
+					this->end = current->prev;
+				}
 				return true;
 			}
 			current = current->next;
@@ -103,6 +111,28 @@ int main() {
 
 	} else {
 		std::cout<<"value 42 not removed"<<std::endl;
+	}
+	my_list.print();
+
+	removed = my_list.remove_by_value(123);
+	if (removed) {
+		std::cout<<"removed value 123"<<std::endl;
+
+	} else {
+		std::cout<<"value 123 not removed"<<std::endl;
+	}
+	my_list.print();
+
+	my_list.add(43);
+	my_list.add(124);
+	my_list.print();
+
+	removed = my_list.remove_by_value(10);
+	if (removed) {
+		std::cout<<"removed value 10"<<std::endl;
+
+	} else {
+		std::cout<<"value 10 not removed"<<std::endl;
 	}
 	my_list.print();
 
