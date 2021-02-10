@@ -40,6 +40,19 @@ struct DoublyLinkedList {
 		return new_item;
 	}
 
+	bool remove_by_value(int data_to_remove) {
+		ListNode* current = begin;
+		while (current) {
+			if (current->data == data_to_remove) {
+				current->prev->next = current->next;
+				current->next->prev = current->prev;
+				return true;
+			}
+			current = current->next;
+		}
+		return false;
+	}
+
 	ListNode* search(int data_to_search) {
 		ListNode* current = begin;
 		while (current) {
@@ -75,6 +88,15 @@ int main() {
 	std::cout<<"searching for 42, found ptr="<<found<<", value = "<<found->data<<std::endl;
 	found = my_list.search(45);
 	std::cout<<"searching for 45, found ptr="<<found<<std::endl;
+
+	bool removed = my_list.remove_by_value(42);
+	if (removed) {
+		std::cout<<"removed value 42"<<std::endl;
+
+	} else {
+		std::cout<<"value 42 not removed"<<std::endl;
+	}
+	my_list.print();
 
 	return 0;
 }
