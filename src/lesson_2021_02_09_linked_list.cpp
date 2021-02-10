@@ -40,6 +40,17 @@ struct DoublyLinkedList {
 		return new_item;
 	}
 
+	ListNode* search(int data_to_search) {
+		ListNode* current = begin;
+		while (current) {
+			if (current->data == data_to_search) {
+				return current;
+			}
+			current = current->next;
+		}
+		return nullptr;
+	}
+
 	void print() {
 		ListNode* current = begin;
 		while (current) {
@@ -60,6 +71,10 @@ int main() {
 	std::cout<<"last item data is "<<my_list.end->data<<"; prev data is "<<my_list.end->prev->data<<std::endl;
 	my_list.print();
 	std::cout<<my_list.size<<std::endl;
+	ListNode* found = my_list.search(42);
+	std::cout<<"searching for 42, found ptr="<<found<<", value = "<<found->data<<std::endl;
+	found = my_list.search(45);
+	std::cout<<"searching for 45, found ptr="<<found<<std::endl;
 
 	return 0;
 }
