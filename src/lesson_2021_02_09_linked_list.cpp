@@ -36,6 +36,7 @@ struct DoublyLinkedList {
 			this->begin = new_item;
 		}
 		this->end = new_item;
+		this->size++;
 		return new_item;
 	}
 
@@ -58,6 +59,7 @@ int main() {
 	std::cout<<"last item data is "<<last_added->data<<"; prev data is "<<last_added->prev->data<<std::endl;
 	std::cout<<"last item data is "<<my_list.end->data<<"; prev data is "<<my_list.end->prev->data<<std::endl;
 	my_list.print();
+	std::cout<<my_list.size<<std::endl;
 
 	return 0;
 }
