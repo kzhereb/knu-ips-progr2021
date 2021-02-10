@@ -54,6 +54,7 @@ struct DoublyLinkedList {
 				} else {
 					this->end = current->prev;
 				}
+				delete current;
 				return true;
 			}
 			current = current->next;
