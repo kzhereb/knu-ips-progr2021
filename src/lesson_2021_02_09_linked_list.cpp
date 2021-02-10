@@ -89,7 +89,15 @@ int main() {
 	found = my_list.search(45);
 	std::cout<<"searching for 45, found ptr="<<found<<std::endl;
 
-	bool removed = my_list.remove_by_value(42);
+	bool removed = my_list.remove_by_value(45);
+	if (removed) {
+		std::cout<<"removed value 45"<<std::endl;
+
+	} else {
+		std::cout<<"value 45 not removed"<<std::endl;
+	}
+	my_list.print();
+	removed = my_list.remove_by_value(42);
 	if (removed) {
 		std::cout<<"removed value 42"<<std::endl;
 
