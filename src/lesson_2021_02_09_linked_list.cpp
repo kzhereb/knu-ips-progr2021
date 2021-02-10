@@ -41,15 +41,13 @@ struct DoublyLinkedList {
 	}
 
 	bool remove_by_value(int data_to_remove) {
-		ListNode* current = begin;
-		while (current) {
-			if (current->data == data_to_remove) {
-				current = remove_node(current);
-				return true;
-			}
-			current = current->next;
+		ListNode* to_remove = search(data_to_remove);
+		if (to_remove) {
+			remove_node(to_remove);
+			return true;
+		} else {
+			return false;
 		}
-		return false;
 	}
 
 	bool remove_by_pointer(ListNode* node_to_remove) {
