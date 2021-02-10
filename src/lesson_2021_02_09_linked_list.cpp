@@ -10,6 +10,11 @@ struct ListNode {
 	int data;
 	ListNode* prev;
 	ListNode* next;
+	ListNode(int data, ListNode* prev, ListNode* next) {
+		this->data = data;
+		this->prev = prev;
+		this->next = next;
+	}
 };
 
 struct DoublyLinkedList {
@@ -25,17 +30,12 @@ struct DoublyLinkedList {
 
 	ListNode* add(int data) {
 		if (end) { // list is not empty
-			ListNode* new_item = new ListNode;
-			new_item->data = data;
-			new_item->prev = this->end;
-			new_item->next = nullptr;
+			ListNode* new_item = new ListNode(data, this->end, nullptr);
 			this->end->next = new_item;
 			this->end = new_item;
 			return new_item;
 		} else { // list is empty
-			ListNode* new_item = new ListNode;
-			new_item->data = data;
-			new_item->next = new_item->prev = nullptr;
+			ListNode* new_item = new ListNode(data, nullptr, nullptr);
 			this->begin = this->end = new_item;
 			return new_item;
 		}
@@ -60,7 +60,7 @@ int main() {
 	std::cout<<"last item data is "<<last_added->data<<"; prev data is "<<last_added->prev->data<<std::endl;
 	std::cout<<"last item data is "<<my_list.end->data<<"; prev data is "<<my_list.end->prev->data<<std::endl;
 	my_list.print();
-	std::cout<<my_list.begin->next;
+
 	return 0;
 }
 
