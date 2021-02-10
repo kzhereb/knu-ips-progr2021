@@ -55,6 +55,7 @@ struct DoublyLinkedList {
 					this->end = current->prev;
 				}
 				delete current;
+				this->size--;
 				return true;
 			}
 			current = current->next;
@@ -70,8 +71,12 @@ struct DoublyLinkedList {
 		if (index_to_remove >= this->size) {
 			return false;
 		}
-		ListNode* current = begin;
-		std::size_t current_index = 0;
+		bool from_begin = false;
+		if (index_to_remove < size/2) {
+			from_begin = true;
+		}
+		ListNode* current = from_begin ? begin : end;
+		std::size_t current_index = from_begin ? 0 : size - 1;
 		while (current) {
 			if (current_index == index_to_remove) {
 				if (current->prev) {
@@ -85,10 +90,16 @@ struct DoublyLinkedList {
 					this->end = current->prev;
 				}
 				delete current;
+				this->size--;
 				return true;
 			}
-			current = current->next;
-			current_index++;
+			if (from_begin) {
+				current = current->next;
+				current_index++;
+			} else {
+				current = current->prev;
+				current_index--;
+			}
 		}
 		return false;
 	}
