@@ -29,16 +29,14 @@ struct DoublyLinkedList {
 	}
 
 	ListNode* add(int data) {
+		ListNode* new_item = new ListNode(data, this->end);
 		if (end) { // list is not empty
-			ListNode* new_item = new ListNode(data, this->end);
 			this->end->next = new_item;
-			this->end = new_item;
-			return new_item;
 		} else { // list is empty
-			ListNode* new_item = new ListNode(data);
-			this->begin = this->end = new_item;
-			return new_item;
+			this->begin = new_item;
 		}
+		this->end = new_item;
+		return new_item;
 	}
 
 	void print() {
