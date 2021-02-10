@@ -44,18 +44,7 @@ struct DoublyLinkedList {
 		ListNode* current = begin;
 		while (current) {
 			if (current->data == data_to_remove) {
-				if (current->prev) {
-					current->prev->next = current->next;
-				} else {
-					this->begin = current->next;
-				}
-				if (current->next) {
-					current->next->prev = current->prev;
-				} else {
-					this->end = current->prev;
-				}
-				delete current;
-				this->size--;
+				current = remove_node(current);
 				return true;
 			}
 			current = current->next;
@@ -79,18 +68,7 @@ struct DoublyLinkedList {
 		std::size_t current_index = from_begin ? 0 : size - 1;
 		while (current) {
 			if (current_index == index_to_remove) {
-				if (current->prev) {
-					current->prev->next = current->next;
-				} else {
-					this->begin = current->next;
-				}
-				if (current->next) {
-					current->next->prev = current->prev;
-				} else {
-					this->end = current->prev;
-				}
-				delete current;
-				this->size--;
+				current = remove_node(current);
 				return true;
 			}
 			if (from_begin) {
@@ -122,6 +100,23 @@ struct DoublyLinkedList {
 			current = current->next;
 		}
 		std::cout<<std::endl;
+	}
+
+private:
+	ListNode* remove_node(ListNode* current) {
+		if (current->prev) {
+			current->prev->next = current->next;
+		} else {
+			this->begin = current->next;
+		}
+		if (current->next) {
+			current->next->prev = current->prev;
+		} else {
+			this->end = current->prev;
+		}
+		delete current;
+		this->size--;
+		return current;
 	}
 };
 
