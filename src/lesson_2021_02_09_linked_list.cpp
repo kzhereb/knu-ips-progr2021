@@ -62,6 +62,37 @@ struct DoublyLinkedList {
 		return false;
 	}
 
+	bool remove_by_pointer(ListNode* node_to_remove) {
+
+	}
+
+	bool remove_by_index(std::size_t index_to_remove) {
+		if (index_to_remove >= this->size) {
+			return false;
+		}
+		ListNode* current = begin;
+		std::size_t current_index = 0;
+		while (current) {
+			if (current_index == index_to_remove) {
+				if (current->prev) {
+					current->prev->next = current->next;
+				} else {
+					this->begin = current->next;
+				}
+				if (current->next) {
+					current->next->prev = current->prev;
+				} else {
+					this->end = current->prev;
+				}
+				delete current;
+				return true;
+			}
+			current = current->next;
+			current_index++;
+		}
+		return false;
+	}
+
 	ListNode* search(int data_to_search) {
 		ListNode* current = begin;
 		while (current) {
@@ -136,6 +167,20 @@ int main() {
 		std::cout<<"value 10 not removed"<<std::endl;
 	}
 	my_list.print();
+
+	my_list.add(567);
+	my_list.add(890);
+	my_list.print();
+
+	removed = my_list.remove_by_index(2);
+	if (removed) {
+		std::cout << "removed index 2" << std::endl;
+
+	} else {
+		std::cout << "index 2 not removed" << std::endl;
+	}
+	my_list.print();
+
 
 	return 0;
 }
