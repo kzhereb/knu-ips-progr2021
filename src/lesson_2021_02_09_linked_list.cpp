@@ -91,6 +91,31 @@ struct DoublyLinkedList {
 		return nullptr;
 	}
 
+	ListNode* get_by_index(std::size_t index_to_find) {
+		if (index_to_find >= this->size) {
+			return nullptr;
+		}
+		bool from_begin = false;
+		if (index_to_find < size/2) {
+			from_begin = true;
+		}
+		ListNode* current = from_begin ? begin : end;
+		std::size_t current_index = from_begin ? 0 : size - 1;
+		while (current) {
+			if (current_index == index_to_find) {
+				return current;
+			}
+			if (from_begin) {
+				current = current->next;
+				current_index++;
+			} else {
+				current = current->prev;
+				current_index--;
+			}
+		}
+		return nullptr;
+	}
+
 	void print() {
 		ListNode* current = begin;
 		while (current) {
@@ -184,6 +209,22 @@ int main() {
 		std::cout << "index 2 not removed" << std::endl;
 	}
 	my_list.print();
+
+	found = my_list.get_by_index(1);
+	if (found) {
+		std::cout << "found at index 1 value " << found->data << std::endl;
+
+	} else {
+		std::cout << "index 1 not found" << std::endl;
+	}
+
+	found = my_list.get_by_index(10);
+	if (found) {
+		std::cout << "found at index 10 value " << found->data << std::endl;
+
+	} else {
+		std::cout << "index 10 not found" << std::endl;
+	}
 
 
 	return 0;
