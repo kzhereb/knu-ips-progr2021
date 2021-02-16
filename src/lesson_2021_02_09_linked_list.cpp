@@ -6,6 +6,8 @@
  */
 #include <iostream>
 
+namespace lesson_2021_02_09_linked_list {
+
 struct ListNode {
 	int data;
 	ListNode* prev;
@@ -213,5 +215,5 @@ int main() {
 
 	return 0;
 }
-
+}
 

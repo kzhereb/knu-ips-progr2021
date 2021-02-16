@@ -6,10 +6,15 @@
  */
 #include <iostream>
 
+#define current_namespace lesson_2021_02_09_linked_list
 
-//int main() {
-//	std::cout<<"Hello world!"<<std::endl;
-//	return 0;
-//}
+namespace current_namespace {
+	int main();
+}
+
+
+int main() {
+	return current_namespace::main();
+}
 
 

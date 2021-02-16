@@ -62,12 +62,12 @@ int main() {
 	//print_array(result_data, DATA_SIZE);
 
 	std::cout<<"heap:"<<std::endl;
-//	int * result_data = create_array_on_heap();
-//	print_array(result_data, DATA_SIZE);
+	int * result_data = create_array_on_heap();
+	print_array(result_data, DATA_SIZE);
 
-	while(true) {
-		process_array_on_heap();
-	}
+//	while(true) {
+//		process_array_on_heap();
+//	}
 	return 0;
 }
 }
