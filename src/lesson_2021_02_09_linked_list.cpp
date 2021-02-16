@@ -66,6 +66,23 @@ struct DoublyLinkedList {
 		}
 	}
 
+	void partial_order() {
+		ListNode* current = this->begin;
+		ListNode* next;
+		int value = this->begin->data;
+
+		while (next = current->next) {
+			if (next->data < value) {
+				current->next = next->next;
+				next->next = this->begin;
+				this->begin = next;
+			} else {
+				current = next;
+			}
+		}
+
+	}
+
 	ListNode* search(int data_to_search) {
 		ListNode* current = begin;
 		while (current) {
@@ -211,6 +228,21 @@ int main() {
 	} else {
 		std::cout << "index 10 not found" << std::endl;
 	}
+
+	DoublyLinkedList list_to_order;
+	list_to_order.add(10);
+	list_to_order.add(3);
+	list_to_order.add(125);
+	list_to_order.add(4);
+
+	std::cout<<"before partial order"<<std::endl;
+	list_to_order.print();
+
+	list_to_order.partial_order();
+
+	std::cout<<"after partial order"<<std::endl;
+	list_to_order.print();
+
 
 
 	return 0;
