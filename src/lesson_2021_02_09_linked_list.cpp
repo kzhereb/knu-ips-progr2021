@@ -55,29 +55,13 @@ struct DoublyLinkedList {
 	}
 
 	bool remove_by_index(std::size_t index_to_remove) {
-		if (index_to_remove >= this->size) {
+		ListNode* to_remove = get_by_index(index_to_remove);
+		if (to_remove) {
+			remove_node(to_remove);
+			return true;
+		} else {
 			return false;
 		}
-		bool from_begin = false;
-		if (index_to_remove < size/2) {
-			from_begin = true;
-		}
-		ListNode* current = from_begin ? begin : end;
-		std::size_t current_index = from_begin ? 0 : size - 1;
-		while (current) {
-			if (current_index == index_to_remove) {
-				current = remove_node(current);
-				return true;
-			}
-			if (from_begin) {
-				current = current->next;
-				current_index++;
-			} else {
-				current = current->prev;
-				current_index--;
-			}
-		}
-		return false;
 	}
 
 	ListNode* search(int data_to_search) {
