@@ -75,6 +75,20 @@ struct Stack {
 		return result;
 	}
 
+	int pop_exception() {
+		if (this->top == nullptr) {
+			std::cout<<"Trying to pop item from empty stack"<<std::endl;
+			throw "Trying to pop item from empty stack";
+		}
+		ListNode* current = this->top;
+		this->top = this->top->next;
+		int result = current->value;
+		delete current;
+		size--;
+		return result;
+
+	}
+
 
 //	void print() {
 //		ListNode* current = this->top
@@ -86,8 +100,9 @@ struct Stack {
 //#define POP_PRINT std::cout<<*mystack.pop_pointer()<<std::endl; //error
 //#define POP_PRINT if(mystack.pop_pointer() != nullptr) {std::cout<<*mystack.pop_pointer()<<std::endl;} // call pop twice
 //#define POP_PRINT p_result = mystack.pop_pointer(); if(p_result) {std::cout<<*p_result<<std::endl;} // memory leak
-#define POP_PRINT p_result = mystack.pop_pointer(); if(p_result) {std::cout<<*p_result<<std::endl; delete p_result;}
-
+//#define POP_PRINT p_result = mystack.pop_pointer(); if(p_result) {std::cout<<*p_result<<std::endl; delete p_result;}
+//#define POP_PRINT std::cout<<mystack.pop_exception()<<std::endl; //crashes on exception
+#define POP_PRINT try { std::cout<<mystack.pop_exception()<<std::endl; } catch (...) {std::cout<<"exception"<<std::endl;}
 
 int main() {
 	Stack mystack;
