@@ -6,7 +6,7 @@
  */
 #include <iostream>
 
-#define current_namespace lesson_2021_02_09_linked_list
+#define current_namespace lesson_2021_02_23_stack_queue
 
 namespace current_namespace {
 	int main();
