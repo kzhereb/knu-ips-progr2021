@@ -61,10 +61,32 @@ struct Stack {
 		return true;
 	}
 
+	int* pop_pointer() {
+		if (this->top == nullptr) {
+			std::cout<<"Trying to pop item from empty stack"<<std::endl;
+			return nullptr;
+		}
+		ListNode* current = this->top;
+		this->top = this->top->next;
+		int* result = new int;
+		*result = current->value;
+		delete current;
+		size--;
+		return result;
+	}
+
+
 //	void print() {
 //		ListNode* current = this->top
 //	}
 };
+
+//#define POP_PRINT std::cout<<mystack.pop()<<std::endl;
+//#define POP_PRINT if (mystack.pop_bool(result)) {std::cout<<result<<std::endl;}
+//#define POP_PRINT std::cout<<*mystack.pop_pointer()<<std::endl; //error
+//#define POP_PRINT if(mystack.pop_pointer() != nullptr) {std::cout<<*mystack.pop_pointer()<<std::endl;} // call pop twice
+//#define POP_PRINT p_result = mystack.pop_pointer(); if(p_result) {std::cout<<*p_result<<std::endl;} // memory leak
+#define POP_PRINT p_result = mystack.pop_pointer(); if(p_result) {std::cout<<*p_result<<std::endl; delete p_result;}
 
 
 int main() {
@@ -72,15 +94,17 @@ int main() {
 	mystack.push(123);
 	mystack.push(45);
 	int result = 0;
-	if (mystack.pop_bool(result)) {std::cout<<result<<std::endl;}
-	if (mystack.pop_bool(result)) {std::cout<<result<<std::endl;}
-//	std::cout<<mystack.pop()<<std::endl;
-//	std::cout<<mystack.pop()<<std::endl;
+	int* p_result = nullptr;
+
+	POP_PRINT
+	POP_PRINT
+
 	mystack.push(12345);
-//	std::cout<<mystack.pop()<<std::endl;
-//	std::cout<<mystack.pop()<<std::endl;
-	if (mystack.pop_bool(result)) {std::cout<<result<<std::endl;}
-	if (mystack.pop_bool(result)) {std::cout<<result<<std::endl;}
+
+	POP_PRINT
+	POP_PRINT
+	POP_PRINT
+
 	return 0;
 }
 }
