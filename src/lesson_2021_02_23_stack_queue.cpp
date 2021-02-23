@@ -35,6 +35,10 @@ struct Stack {
 	}
 
 	int pop() {
+		if (this->top == nullptr) {
+			std::cout<<"Trying to pop item from empty stack"<<std::endl;
+			return -1;
+		}
 		ListNode* current = this->top;
 		this->top = this->top->next;
 		int result = current->value;
@@ -57,6 +61,7 @@ int main() {
 	std::cout<<mystack.pop()<<std::endl;
 	std::cout<<mystack.pop()<<std::endl;
 	mystack.push(12345);
+	std::cout<<mystack.pop()<<std::endl;
 	std::cout<<mystack.pop()<<std::endl;
 	return 0;
 }
