@@ -34,7 +34,7 @@ struct Stack {
 		size++;
 	}
 
-	int pop() {
+	int pop_minus1() {
 		if (this->top == nullptr) {
 			std::cout<<"Trying to pop item from empty stack"<<std::endl;
 			return -1;
@@ -48,6 +48,19 @@ struct Stack {
 
 	}
 
+	bool pop_bool(int& result) {
+		if (this->top == nullptr) {
+			std::cout<<"Trying to pop item from empty stack"<<std::endl;
+			return false;
+		}
+		ListNode* current = this->top;
+		this->top = this->top->next;
+		result = current->value;
+		delete current;
+		size--;
+		return true;
+	}
+
 //	void print() {
 //		ListNode* current = this->top
 //	}
@@ -58,11 +71,16 @@ int main() {
 	Stack mystack;
 	mystack.push(123);
 	mystack.push(45);
-	std::cout<<mystack.pop()<<std::endl;
-	std::cout<<mystack.pop()<<std::endl;
+	int result = 0;
+	if (mystack.pop_bool(result)) {std::cout<<result<<std::endl;}
+	if (mystack.pop_bool(result)) {std::cout<<result<<std::endl;}
+//	std::cout<<mystack.pop()<<std::endl;
+//	std::cout<<mystack.pop()<<std::endl;
 	mystack.push(12345);
-	std::cout<<mystack.pop()<<std::endl;
-	std::cout<<mystack.pop()<<std::endl;
+//	std::cout<<mystack.pop()<<std::endl;
+//	std::cout<<mystack.pop()<<std::endl;
+	if (mystack.pop_bool(result)) {std::cout<<result<<std::endl;}
+	if (mystack.pop_bool(result)) {std::cout<<result<<std::endl;}
 	return 0;
 }
 }
