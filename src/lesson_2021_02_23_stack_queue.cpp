@@ -154,11 +154,14 @@ struct Stack {
 		return this->top == nullptr;
 	}
 
-
-
-//	void print() {
-//		ListNode* current = this->top
-//	}
+	void print() {
+		ListNode* current = this->top;
+		while (current) {
+			std::cout<<current->value<<" ";
+			current = current->next;
+		}
+		std::cout<<std::endl;
+	}
 };
 
 #define POP_PRINT std::cout<<mystack.pop()<<std::endl;
@@ -177,6 +180,7 @@ int main() {
 	Stack mystack;
 	mystack.push(123);
 	mystack.push(45);
+	mystack.print();
 
 	std::cout<<"Peek should not remove items from stack"<<std::endl;
 	std::cout<<mystack.peek()<<std::endl;
@@ -198,6 +202,7 @@ int main() {
 	mystack.push(1);
 	mystack.push(2);
 	mystack.push(3);
+	mystack.print();
 
 	std::cout<<mystack.size<<std::endl;
 
