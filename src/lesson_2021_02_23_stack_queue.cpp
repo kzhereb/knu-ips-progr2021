@@ -132,13 +132,17 @@ struct Stack {
 
 	}
 
+	int pop() {
+		return pop_assert_with_message();
+	}
+
 
 //	void print() {
 //		ListNode* current = this->top
 //	}
 };
 
-//#define POP_PRINT std::cout<<mystack.pop()<<std::endl;
+#define POP_PRINT std::cout<<mystack.pop()<<std::endl;
 //#define POP_PRINT if (mystack.pop_bool(result)) {std::cout<<result<<std::endl;}
 //#define POP_PRINT std::cout<<*mystack.pop_pointer()<<std::endl; //error
 //#define POP_PRINT if(mystack.pop_pointer() != nullptr) {std::cout<<*mystack.pop_pointer()<<std::endl;} // call pop twice
@@ -148,7 +152,7 @@ struct Stack {
 //#define POP_PRINT try { std::cout<<mystack.pop_exception_string()<<std::endl; } catch (...) {std::cout<<"exception"<<std::endl;}
 //#define POP_PRINT try { std::cout<<mystack.pop_exception()<<std::endl; } catch (const std::logic_error& e) {std::cerr<<e.what()<<std::endl;}
 //#define POP_PRINT std::cout<<mystack.pop_assert()<<std::endl;
-#define POP_PRINT std::cout<<mystack.pop_assert_with_message()<<std::endl;
+//#define POP_PRINT std::cout<<mystack.pop_assert_with_message()<<std::endl;
 
 int main() {
 	Stack mystack;
