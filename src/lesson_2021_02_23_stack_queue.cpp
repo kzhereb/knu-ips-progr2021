@@ -135,6 +135,10 @@ struct Stack {
 	int pop() {
 		return pop_assert_with_message();
 	}
+	int peek() {
+		assert(this->top && "Trying to peek into empty stack");
+		return this->top->value;
+	}
 
 	void clear() {
 		ListNode* current = this->top;
@@ -173,9 +177,15 @@ int main() {
 	Stack mystack;
 	mystack.push(123);
 	mystack.push(45);
+
+	std::cout<<"Peek should not remove items from stack"<<std::endl;
+	std::cout<<mystack.peek()<<std::endl;
+	std::cout<<mystack.peek()<<std::endl;
+
 	int result = 0;
 	int* p_result = nullptr;
 
+	std::cout<<"Pop should remove items from stack"<<std::endl;
 	POP_PRINT
 	POP_PRINT
 
