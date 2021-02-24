@@ -164,6 +164,39 @@ struct Stack {
 	}
 };
 
+
+struct Queue {
+	ListNode* begin;
+	ListNode* end;
+
+	Queue() {
+		this->begin = this->end = nullptr;
+	}
+
+	void enqueue(int value) {
+		ListNode* new_item = new ListNode(value);
+		if (this->end) {
+			this->end->next = new_item;
+		} else {
+			this->begin = new_item;
+		}
+		this->end = new_item;
+	}
+
+	int dequeue() {
+		assert(this->begin && "Trying to dequeue from empty queue");
+
+		int result = this->begin->value;
+		ListNode* current = this->begin;
+		this->begin = this->begin->next;
+		if (this->begin == nullptr) {
+			this->end = nullptr;
+		}
+		delete current;
+
+		return result;
+	}
+};
 #define POP_PRINT std::cout<<mystack.pop()<<std::endl;
 //#define POP_PRINT if (mystack.pop_bool(result)) {std::cout<<result<<std::endl;}
 //#define POP_PRINT std::cout<<*mystack.pop_pointer()<<std::endl; //error
@@ -216,6 +249,15 @@ int main() {
 
 
 	//POP_PRINT
+
+	Queue myqueue;
+	myqueue.enqueue(123);
+	myqueue.enqueue(456);
+	myqueue.enqueue(789);
+
+	std::cout<<myqueue.dequeue()<<std::endl;
+	std::cout<<myqueue.dequeue()<<std::endl;
+	std::cout<<myqueue.dequeue()<<std::endl;
 
 	return 0;
 }
