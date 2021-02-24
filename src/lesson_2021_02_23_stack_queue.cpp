@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <exception>
+#include <cassert>
 
 namespace lesson_2021_02_23_stack_queue {
 
@@ -104,6 +105,18 @@ struct Stack {
 
 	}
 
+	int pop_assert() {
+		assert(this->top != nullptr);
+
+		ListNode* current = this->top;
+		this->top = this->top->next;
+		int result = current->value;
+		delete current;
+		size--;
+		return result;
+
+	}
+
 
 //	void print() {
 //		ListNode* current = this->top
@@ -118,8 +131,8 @@ struct Stack {
 //#define POP_PRINT p_result = mystack.pop_pointer(); if(p_result) {std::cout<<*p_result<<std::endl; delete p_result;}
 //#define POP_PRINT std::cout<<mystack.pop_exception()<<std::endl; //crashes on exception
 //#define POP_PRINT try { std::cout<<mystack.pop_exception_string()<<std::endl; } catch (...) {std::cout<<"exception"<<std::endl;}
-#define POP_PRINT try { std::cout<<mystack.pop_exception()<<std::endl; } catch (const std::logic_error& e) {std::cerr<<e.what()<<std::endl;}
-
+//#define POP_PRINT try { std::cout<<mystack.pop_exception()<<std::endl; } catch (const std::logic_error& e) {std::cerr<<e.what()<<std::endl;}
+#define POP_PRINT std::cout<<mystack.pop_assert()<<std::endl;
 
 
 int main() {
