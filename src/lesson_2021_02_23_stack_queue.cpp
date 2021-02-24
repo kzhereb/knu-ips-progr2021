@@ -146,6 +146,10 @@ struct Stack {
 		this->size = 0;
 	}
 
+	bool is_empty() {
+		return this->top == nullptr;
+	}
+
 
 
 //	void print() {
@@ -184,7 +188,17 @@ int main() {
 	mystack.push(1);
 	mystack.push(2);
 	mystack.push(3);
+
+	std::cout<<mystack.size<<std::endl;
+
 	mystack.clear();
+
+	if (mystack.is_empty()) {
+		std::cout<< "Empty stack after clear()"<<std::endl;
+	} else {
+		std::cerr<< "Should not happen! Stack not empty after clear()"<<std::endl;
+	}
+
 
 	//POP_PRINT
 
