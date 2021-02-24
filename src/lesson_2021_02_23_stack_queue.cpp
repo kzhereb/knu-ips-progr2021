@@ -7,6 +7,9 @@
 
 #include <iostream>
 #include <exception>
+
+//#define NDEBUG  // disable asserts; should be enabled automatically in release mode
+
 #include <cassert>
 
 namespace lesson_2021_02_23_stack_queue {
