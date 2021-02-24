@@ -106,7 +106,19 @@ struct Stack {
 	}
 
 	int pop_assert() {
-		assert(this->top != nullptr);
+		assert(this->top != nullptr); // Trying to pop item from empty stack
+
+		ListNode* current = this->top;
+		this->top = this->top->next;
+		int result = current->value;
+		delete current;
+		size--;
+		return result;
+
+	}
+
+	int pop_assert_with_message() {
+		assert(this->top != nullptr && "Trying to pop item from empty stack");
 
 		ListNode* current = this->top;
 		this->top = this->top->next;
@@ -132,8 +144,8 @@ struct Stack {
 //#define POP_PRINT std::cout<<mystack.pop_exception()<<std::endl; //crashes on exception
 //#define POP_PRINT try { std::cout<<mystack.pop_exception_string()<<std::endl; } catch (...) {std::cout<<"exception"<<std::endl;}
 //#define POP_PRINT try { std::cout<<mystack.pop_exception()<<std::endl; } catch (const std::logic_error& e) {std::cerr<<e.what()<<std::endl;}
-#define POP_PRINT std::cout<<mystack.pop_assert()<<std::endl;
-
+//#define POP_PRINT std::cout<<mystack.pop_assert()<<std::endl;
+#define POP_PRINT std::cout<<mystack.pop_assert_with_message()<<std::endl;
 
 int main() {
 	Stack mystack;
