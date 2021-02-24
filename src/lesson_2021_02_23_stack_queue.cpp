@@ -136,6 +136,17 @@ struct Stack {
 		return pop_assert_with_message();
 	}
 
+	void clear() {
+		ListNode* current = this->top;
+		while (this->top) {
+			this->top = this->top->next;
+			delete current;
+			current = this->top;
+		}
+		this->size = 0;
+	}
+
+
 
 //	void print() {
 //		ListNode* current = this->top
@@ -167,8 +178,15 @@ int main() {
 	mystack.push(12345);
 
 	POP_PRINT
-	POP_PRINT
-	POP_PRINT
+	//POP_PRINT
+	//POP_PRINT
+
+	mystack.push(1);
+	mystack.push(2);
+	mystack.push(3);
+	mystack.clear();
+
+	//POP_PRINT
 
 	return 0;
 }
