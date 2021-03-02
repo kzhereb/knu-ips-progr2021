@@ -50,6 +50,34 @@ struct SparseList {
 		this->size++;
 
 	}
+
+	void insert(std::size_t index, int data = EMPTY_VALUE) {
+		if (index >= this->size) {return;}
+		if (!this->begin) { return; }
+
+		ListNode* current_node = this->begin;
+		while (current_node) {
+			if (current_node->index >= index) { break; }
+			current_node = current_node->next;
+		}
+		if (data != EMPTY_VALUE) {
+			ListNode* new_node = new ListNode(index, data, current_node->prev, current_node);
+			if (current_node->prev) {
+				current_node->prev->next = new_node;
+			}
+			else {
+				this->begin = new_node;
+			}
+			current_node->prev = new_node;
+		}
+		while (current_node) {
+			current_node->index++;
+			current_node = current_node->next;
+		}
+		this->size++;
+	}
+
+
 };
 
 
@@ -59,6 +87,9 @@ int main() {
 	mylist.add();
 	mylist.add();
 	mylist.add(123);
+
+	mylist.insert(2, 56);
+
 	std::cout<<mylist.size<<std::endl;
 
 
