@@ -6,7 +6,7 @@
  */
 #include <iostream>
 
-#define current_namespace lesson_2021_02_23_stack_queue
+#define current_namespace lesson_2021_03_02_sparse_list
 
 namespace current_namespace {
 	int main();
