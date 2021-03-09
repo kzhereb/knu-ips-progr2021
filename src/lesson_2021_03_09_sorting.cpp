@@ -21,8 +21,7 @@ void quadratic_select_sort(int* arr, std::size_t size) {
 	std::size_t num_buckets = bucket_size;
 
 	// calculate minimum in each bucket
-	int* bucket_min_index = new int[num_buckets];
-
+	int* bucket_min_index = new int[num_buckets]; // stores index of min element in arr, the value can be obtained from array
 	std::size_t current_bucket = 0;
 	std::size_t index_in_bucket = 0;
 	int current_min = INT_MAX;
@@ -39,9 +38,52 @@ void quadratic_select_sort(int* arr, std::size_t size) {
 		}
 	}
 
-	for(std::size_t i=0; i<num_buckets; i++) {
-		std::cout<<bucket_min_index[i]<<" ";
-	} std::cout<<std::endl;
+	int* output_arr = new int[size];
+	for(std::size_t i = 0; i < size; i++) {
+		// find min out of mins
+		current_min = INT_MAX;
+		std::size_t min_bucket = 0;
+		for (std::size_t j = 0; j< num_buckets; j++) {
+			int current_value = arr[bucket_min_index[j]];
+			if (current_value < current_min) {
+				current_min = current_value;
+				min_bucket = j;
+			}
+		}
+		//move to output_arr, replace with some value
+		output_arr[i] = current_min;
+		arr[ bucket_min_index[min_bucket] ] = INT_MAX;
+
+		//update min in bucket
+		// 0: [0, bucket_size); 1:[bucket_size; 2*bucket_size); 2:[2*bucket_size; 3*bucket_size)
+
+
+		std::size_t bucket_start = min_bucket * bucket_size;
+		std::size_t bucket_end = (min_bucket+1) * bucket_size;
+		if(bucket_end>size) { bucket_end = size;}
+
+		current_min = INT_MAX;
+		for (std::size_t j = bucket_start; j<bucket_end; j++) {
+			if (arr[j] < current_min) {
+				current_min = arr[j];
+				bucket_min_index[min_bucket] = j;
+			}
+		}
+	}
+
+
+
+
+
+	//copy output_arr to arr, delete output_arr
+	for(std::size_t i = 0; i < size; i++) {
+		arr[i] = output_arr[i];
+	}
+	delete [] output_arr;
+
+//	for(std::size_t i=0; i<num_buckets; i++) {
+//		std::cout<<bucket_min_index[i]<<" ";
+//	} std::cout<<std::endl;
 
 	delete [] bucket_min_index;
 }
