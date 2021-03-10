@@ -6,6 +6,8 @@
  */
 
 #include <iostream>
+#include <utility>
+
 #include <cmath>
 #include <climits>
 
@@ -93,6 +95,23 @@ void quadratic_select_sort(int* arr, std::size_t size) {
 }
 
 
+void selection_sort(int* arr, std::size_t size) {
+	for (std::size_t i = 0; i<size; i++) {
+		int min_value = arr[i];
+		std::size_t min_index = i;
+		for (std::size_t j = i+1; j<size; j++) {
+			if (arr[j]<min_value) {
+				min_value = arr[j];
+				min_index = j;
+			}
+		}
+		if (min_index != i) {
+			std::swap(arr[i], arr[min_index]);
+		}
+	}
+}
+
+
 int* generate_random_array(std::size_t size) {
 	int* arr = new int[size];
 	for(std::size_t i = 0; i< size; i++) {
@@ -117,7 +136,8 @@ int main(){
 		}
 		std::cout<<std::endl;
 
-		quadratic_select_sort(arr,size);
+		//quadratic_select_sort(arr,size);
+		selection_sort(arr,size);
 		std::cout<<"Sorted array: "<<std::endl;
 		for(std::size_t i = 0; i<size; i++) {
 			std::cout<<arr[i]<<" ";
