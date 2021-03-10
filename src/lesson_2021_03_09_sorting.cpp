@@ -7,11 +7,30 @@
 
 #include <iostream>
 #include <utility>
-
+#include <chrono>
 #include <cmath>
 #include <climits>
 
 namespace lesson_2021_03_09_sorting {
+
+using namespace std::chrono;
+
+class Time
+{
+public:
+  static int GetInSeconds()
+  {
+    auto currentTime = system_clock::now();
+    return (int)system_clock::to_time_t(currentTime);
+  }
+
+  static std::string GetParsed()
+  {
+    auto currentTimeRaw = system_clock::now();
+    auto currentTime = system_clock::to_time_t(currentTimeRaw);
+    return ctime(&currentTime);
+  }
+};
 
 std::size_t get_bucket_size(std::size_t size) {
 	return std::ceil(std::sqrt(size));
