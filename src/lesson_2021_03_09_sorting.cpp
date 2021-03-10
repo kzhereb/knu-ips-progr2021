@@ -155,6 +155,13 @@ int* generate_random_array(std::size_t size) {
 	return arr;
 }
 
+int* copy_array_loop(int* arr, std::size_t size) {
+	int* result = new int[size];
+	for(std::size_t i = 0; i< size; i++) {
+		result[i] = arr[i];
+	}
+	return result;
+}
 
 int main(){
 //	std::cout<<get_bucket_size(24)<<std::endl;
@@ -185,6 +192,19 @@ int main(){
 	{
 		Timer timer{"select_sort"};
 		selection_sort(arr, 20000);
+	}
+
+	for (std::size_t size=10000; size<=50000; size+=10000) {
+		int* arr1 = generate_random_array(size);
+		int* arr2 = copy_array_loop(arr1, size);
+		{
+			Timer timer("select_sort "+std::to_string(size));
+			selection_sort(arr1, size);
+		}
+		{
+			Timer timer("quadratic_select_sort "+std::to_string(size));
+			quadratic_select_sort(arr2, size);
+		}
 	}
 
 
