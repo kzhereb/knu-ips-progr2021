@@ -32,6 +32,22 @@ public:
   }
 };
 
+class Timer {
+private:
+	std::string name;
+	std::chrono::time_point<std::chrono::high_resolution_clock> start;
+public:
+	Timer(std::string name) {
+		this->name = name;
+		this->start = std::chrono::high_resolution_clock::now();
+	}
+	~Timer() {
+		auto end = std::chrono::high_resolution_clock::now();
+		std::cout<<"Timer "<<name<<": "<<
+				std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << "ms"<<std::endl;
+	}
+};
+
 std::size_t get_bucket_size(std::size_t size) {
 	return std::ceil(std::sqrt(size));
 }
@@ -162,6 +178,13 @@ int main(){
 			std::cout<<arr[i]<<" ";
 		}
 		std::cout<<std::endl;
+	}
+
+
+	int* arr = generate_random_array(20000);
+	{
+		Timer timer{"select_sort"};
+		selection_sort(arr, 20000);
 	}
 
 
