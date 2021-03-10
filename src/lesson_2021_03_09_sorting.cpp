@@ -15,10 +15,14 @@ std::size_t get_bucket_size(std::size_t size) {
 	return std::ceil(std::sqrt(size));
 }
 
+std::size_t get_num_buckets(std::size_t size) {
+	return std::round(std::sqrt(size));
+}
+
 
 void quadratic_select_sort(int* arr, std::size_t size) {
 	std::size_t bucket_size = get_bucket_size(size);
-	std::size_t num_buckets = bucket_size;
+	std::size_t num_buckets = get_num_buckets(size);
 
 	// calculate minimum in each bucket
 	int* bucket_min_index = new int[num_buckets]; // stores index of min element in arr, the value can be obtained from array
@@ -89,13 +93,39 @@ void quadratic_select_sort(int* arr, std::size_t size) {
 }
 
 
+int* generate_random_array(std::size_t size) {
+	int* arr = new int[size];
+	for(std::size_t i = 0; i< size; i++) {
+		arr[i] = rand() % 20;
+	}
+	return arr;
+}
+
+
 int main(){
 //	std::cout<<get_bucket_size(24)<<std::endl;
 //	std::cout<<get_bucket_size(25)<<std::endl;
 
-	int arr[5] = {1, 2, 3, 4, 5};
+	//int arr[5] = {1, 2, 3, 4, 5};
 	//int arr[5] = {5, 4, 3, 2, 1};
-	quadratic_select_sort(arr,5);
+
+	for (std::size_t size = 4; size<26; size++) {
+		int * arr = generate_random_array(size);
+		std::cout<<"Random array of size "<<size<<std::endl;
+		for(std::size_t i = 0; i<size; i++) {
+			std::cout<<arr[i]<<" ";
+		}
+		std::cout<<std::endl;
+
+		quadratic_select_sort(arr,size);
+		std::cout<<"Sorted array: "<<std::endl;
+		for(std::size_t i = 0; i<size; i++) {
+			std::cout<<arr[i]<<" ";
+		}
+		std::cout<<std::endl;
+	}
+
+
 
 	return 0;
 }
