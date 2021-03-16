@@ -155,6 +155,14 @@ int* generate_random_array(std::size_t size) {
 	return arr;
 }
 
+int* generate_almost_sorted_array_equation(std::size_t size) {
+	int* arr = new int[size];
+	for(std::size_t i = 0; i< size; i++) {
+		arr[i] = (i % 10 == 0) ? 5 : 2 * i + 1;
+	}
+	return arr;
+}
+
 int* copy_array_loop(int* arr, std::size_t size) {
 	int* result = new int[size];
 	for(std::size_t i = 0; i< size; i++) {
@@ -163,12 +171,16 @@ int* copy_array_loop(int* arr, std::size_t size) {
 	return result;
 }
 
-int main(){
-//	std::cout<<get_bucket_size(24)<<std::endl;
-//	std::cout<<get_bucket_size(25)<<std::endl;
+void print_array(int* arr, std::size_t size) {
+	for(std::size_t i = 0; i<size; i++) {
+		std::cout<<arr[i]<<" ";
+	}
+	std::cout<<std::endl;
+}
 
-	//int arr[5] = {1, 2, 3, 4, 5};
-	//int arr[5] = {5, 4, 3, 2, 1};
+int main(){
+	int* almost_sorted = generate_almost_sorted_array_equation(100);
+	print_array(almost_sorted, 100);
 
 	for (std::size_t size = 4; size<26; size++) {
 		int * arr = generate_random_array(size);
