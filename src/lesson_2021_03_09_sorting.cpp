@@ -198,6 +198,7 @@ void print_array(int* arr, std::size_t size) {
 int main(){
 	int* almost_sorted = generate_almost_sorted_array_swap(100);
 	print_array(almost_sorted, 100);
+	delete [] almost_sorted;
 
 	for (std::size_t size = 4; size<26; size++) {
 		int * arr = generate_random_array(size);
@@ -214,6 +215,7 @@ int main(){
 			std::cout<<arr[i]<<" ";
 		}
 		std::cout<<std::endl;
+		delete [] arr;
 	}
 
 
@@ -222,6 +224,7 @@ int main(){
 		Timer timer{"select_sort"};
 		selection_sort(arr, 20000);
 	}
+	delete [] arr;
 
 	for (std::size_t size=10000; size<=50000; size+=10000) {
 		int* arr1 = generate_random_array(size);
@@ -234,6 +237,8 @@ int main(){
 			Timer timer("quadratic_select_sort "+std::to_string(size));
 			quadratic_select_sort(arr2, size);
 		}
+		delete [] arr1;
+		delete [] arr2;
 	}
 
 
