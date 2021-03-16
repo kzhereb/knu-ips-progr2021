@@ -6,6 +6,7 @@
  */
 
 #include <iostream>
+#include <algorithm>
 #include <utility>
 #include <chrono>
 #include <cmath>
@@ -163,6 +164,22 @@ int* generate_almost_sorted_array_equation(std::size_t size) {
 	return arr;
 }
 
+int* generate_almost_sorted_array_swap(std::size_t size) {
+	int* arr = generate_random_array(size);
+
+	std::sort(arr, arr+size);
+
+	std::size_t swap_count = 10;
+
+	for(std::size_t i = 0; i< swap_count; i++) {
+		std::size_t from = rand() % size;
+		std::size_t to = rand() % size;
+		std::swap(arr[from], arr[to]);
+	}
+	return arr;
+}
+
+
 int* copy_array_loop(int* arr, std::size_t size) {
 	int* result = new int[size];
 	for(std::size_t i = 0; i< size; i++) {
@@ -179,7 +196,7 @@ void print_array(int* arr, std::size_t size) {
 }
 
 int main(){
-	int* almost_sorted = generate_almost_sorted_array_equation(100);
+	int* almost_sorted = generate_almost_sorted_array_swap(100);
 	print_array(almost_sorted, 100);
 
 	for (std::size_t size = 4; size<26; size++) {
