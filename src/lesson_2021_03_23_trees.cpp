@@ -83,6 +83,9 @@ struct Tree {
 			if (current) { std::cout<<", "; }
 		}
 		std::cout<<")";
+		if (node_to_print == this->root) {
+			std::cout<<std::endl;
+		}
 
 	}
 };
