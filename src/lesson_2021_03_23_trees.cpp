@@ -67,6 +67,24 @@ struct Tree {
 
 
 	}
+	void print(TreeNode* node_to_print = nullptr) {
+		if (! node_to_print) {
+			node_to_print = this->root;
+			if (! node_to_print) {
+				std::cout<<"Empty tree"<<std::endl;
+				return;
+			}
+		}
+		std::cout<<node_to_print->data<<"(";
+		TreeNode* current = node_to_print->first_child;
+		while (current) {
+			print(current);
+			current = current->next;
+			if (current) { std::cout<<", "; }
+		}
+		std::cout<<")";
+
+	}
 };
 
 
@@ -77,7 +95,7 @@ int main() {
 	std::cout<<tree.root->data<<std::endl;
 	tree.add(25);
 	std::cout<<tree.root->first_child->data<<std::endl;
-
+	tree.print();
 
 	return 0;
 }
