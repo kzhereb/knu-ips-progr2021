@@ -147,7 +147,7 @@ void external_sort_merge_runs(std::string filename, std::size_t buffer_size =
 
 	std::fstream extra_files[4];
 	for (std::size_t i = 0; i < 4; i++) {
-		extra_files[i] = fstream(filename + std::to_string(i));
+		extra_files[i] = std::fstream(filename + std::to_string(i));
 	}
 	int * buffer = new int[buffer_size];
 	std::size_t buffer_position = 0;
