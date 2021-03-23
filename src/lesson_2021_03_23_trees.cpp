@@ -96,6 +96,8 @@ int main() {
 	tree.add(25);
 	std::cout<<tree.root->first_child->data<<std::endl;
 	tree.print();
+	tree.add(35);
+	tree.print();
 
 	return 0;
 }
