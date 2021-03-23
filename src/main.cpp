@@ -6,7 +6,7 @@
  */
 #include <iostream>
 
-#define current_namespace lesson_2021_03_09_sorting
+#define current_namespace lesson_2021_03_23_trees
 
 namespace current_namespace {
 	int main();
