@@ -23,6 +23,7 @@ bool compare_x_y(const Point& first, const Point& second) {
 }
 
 typedef bool (*comparator)(const Point&, const Point&);
+typedef bool (*comparator_extended)(const Point&, const Point&, comparator next);
 
 bool compare_multi_x(const Point& first, const Point& second, comparator next_compare) {
 	if (first.x != second.x) {
@@ -54,12 +55,20 @@ bool compare_z(const Point& first, const Point& second) {
 	return first.z < second.z;
 }
 
+//comparator combine(comparator_extended start, comparator next) {
+//	return [start, next](const Point& first, const Point& second) {
+//		return start(first, second, next);
+//	};
+//
+//}
+
 
 void sort_x_y(Point* arr, std::size_t size) {
 	//std::sort(arr, arr+size, compare_x_y);
 	std::sort(arr, arr+size, [](const Point& first, const Point& second) {
 		return compare_multi_x(first, second, compare_y);
 	});
+	//std::sort(arr, arr+size, combine(compare_multi_x, compare_y));
 
 }
 
