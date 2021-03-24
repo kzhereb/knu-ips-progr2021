@@ -63,22 +63,79 @@ bool compare_z(const Point& first, const Point& second) {
 //}
 
 
+struct Comparator{
+	Comparator* next_comparator;
+	Comparator(Comparator* next_comparator = nullptr) {
+		this->next_comparator = next_comparator;
+	}
+	virtual bool less(const Point& first, const Point& second)=0;
+	virtual bool equals(const Point& first, const Point& second)=0;
+	bool operator()(const Point& first, const Point& second) {
+		if (!equals(first, second)) {
+			return less(first, second);
+		} else if (next_comparator) {
+			return (*next_comparator)(first, second);
+		} else { return false; }
+	}
+};
+
+struct ComparatorX: public Comparator {
+	ComparatorX(Comparator* next = nullptr): Comparator(next) {}
+	bool less(const Point& first, const Point& second) override {
+		return first.x < second.x;
+	}
+	bool equals(const Point& first, const Point& second) override {
+		return first.x == second.x;
+	}
+};
+
+struct ComparatorY: public Comparator {
+	ComparatorY(Comparator* next = nullptr): Comparator(next) {}
+	bool less(const Point& first, const Point& second) override {
+		return first.y < second.y;
+	}
+	bool equals(const Point& first, const Point& second) override {
+		return first.y == second.y;
+	}
+};
+
+struct ComparatorZ: public Comparator {
+	ComparatorZ(Comparator* next = nullptr): Comparator(next) {}
+	bool less(const Point& first, const Point& second) override {
+		return first.z < second.z;
+	}
+	bool equals(const Point& first, const Point& second) override {
+		return first.z == second.z;
+	}
+};
+
 void sort_x_y(Point* arr, std::size_t size) {
 	//std::sort(arr, arr+size, compare_x_y);
-	std::sort(arr, arr+size, [](const Point& first, const Point& second) {
-		return compare_multi_x(first, second, compare_y);
-	});
+//	std::sort(arr, arr+size, [](const Point& first, const Point& second) {
+//		return compare_multi_x(first, second, compare_y);
+//	});
 	//std::sort(arr, arr+size, combine(compare_multi_x, compare_y));
+	Comparator* comparator = new ComparatorX(new ComparatorY);
+	std::sort(arr, arr + size,
+			[comparator](const Point& first, const Point& second) {
+				return (*comparator)(first, second);
+			});
 
 }
 
 void sort_x_y_z(Point* arr, std::size_t size) {
 	//std::sort(arr, arr+size, compare_x_y);
-	std::sort(arr, arr+size, [](const Point& first, const Point& second) {
-		return compare_multi_x(first, second, [](const Point& first, const Point& second) {
-			return compare_multi_y(first, second, compare_z);
-		});
-	});
+//	std::sort(arr, arr+size, [](const Point& first, const Point& second) {
+//		return compare_multi_x(first, second, [](const Point& first, const Point& second) {
+//			return compare_multi_y(first, second, compare_z);
+//		});
+//	});
+
+	Comparator* comparator = new ComparatorX(new ComparatorY(new ComparatorZ));
+	std::sort(arr, arr + size,
+			[comparator](const Point& first, const Point& second) {
+				return (*comparator)(first, second);
+			});
 
 }
 
