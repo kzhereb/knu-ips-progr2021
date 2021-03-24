@@ -22,21 +22,21 @@ bool compare_x_y(const Point& first, const Point& second) {
 	} else { return first.y < second.y; }
 }
 
+typedef bool (*comparator)(const Point&, const Point&);
 
-
-bool compare_multi_x(const Point& first, const Point& second, bool (*next_compare)(const Point&, const Point&)) {
+bool compare_multi_x(const Point& first, const Point& second, comparator next_compare) {
 	if (first.x != second.x) {
 		return first.x < second.x;
 	} else { return next_compare(first, second); }
 }
 
-bool compare_multi_y(const Point& first, const Point& second, bool (*next_compare)(const Point&, const Point&)) {
+bool compare_multi_y(const Point& first, const Point& second, comparator next_compare) {
 	if (first.y != second.y) {
 		return first.y < second.y;
 	} else { return next_compare(first, second); }
 }
 
-bool compare_multi_z(const Point& first, const Point& second, bool (*next_compare)(const Point&, const Point&)) {
+bool compare_multi_z(const Point& first, const Point& second, comparator next_compare) {
 	if (first.z != second.z) {
 		return first.z < second.z;
 	} else { return next_compare(first, second); }
