@@ -116,11 +116,8 @@ struct Tree {
 			node->next->prev = node->prev;
 		}
 
-		TreeNode* current = node->first_child;
-		while(current) {
-			TreeNode* to_remove = current;
-			current = current->next;
-			this->remove(to_remove);
+		while(node->first_child) {
+			remove(node->first_child);
 		}
 
 		delete node;
