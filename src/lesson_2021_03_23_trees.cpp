@@ -10,6 +10,17 @@
 
 namespace lesson_2021_03_23_trees {
 
+
+
+// root (parent = nullptr, prev=next=nullptr, first_child = ch1
+// > ch1 (parent = root, prev = nullptr, next = ch2, first_child = gc1)
+// >>> gc1 (parent = ch1, prev = nullptr, next = gc2, first_child = nullptr)
+// >>> gc2 (parent = ch1, prev = gc1, next = nullptr, first_child = nullptr)
+// > ch2 (parent = root, prev = ch1, next = ch3, first_child = nullptr)
+// > ch3 (parent = root, prev = ch2, next = nullptr, first_child = gc3)
+// >>> gc3 (parent = ch3, prev = nullptr, next = nullptr, first_child = nullptr)
+
+
 struct TreeNode {
 	int data;
 	TreeNode* next;
@@ -88,6 +99,32 @@ struct Tree {
 		}
 
 	}
+
+	void remove(TreeNode* node) {
+		if (node->prev) {
+			node->prev->next = node->next;
+		} else {
+			if (node->parent) { // this is first child
+				assert(node->parent->first_child == node);
+				node->parent->first_child = node->next;
+			} else { //this is root
+				assert(this->root == node);
+				this->root = nullptr;
+			}
+		}
+		if (node->next) {
+			node->next->prev = node->prev;
+		}
+
+		TreeNode* current = node->first_child;
+		while(current) {
+			TreeNode* to_remove = current;
+			current = current->next;
+			this->remove(to_remove);
+		}
+
+		delete node;
+	}
 };
 
 
@@ -100,6 +137,14 @@ int main() {
 	std::cout<<tree.root->first_child->data<<std::endl;
 	tree.print();
 	tree.add(35);
+	tree.print();
+
+	std::cout << "remove 25" << std::endl;
+	tree.remove(tree.root->first_child);
+	tree.print();
+
+	std::cout << "remove root" << std::endl;
+	tree.remove(tree.root);
 	tree.print();
 
 	return 0;
