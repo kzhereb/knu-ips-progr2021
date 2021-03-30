@@ -122,8 +122,21 @@ struct Tree {
 
 		delete node;
 	}
+	typedef void (*process_func)(int);
+	void traverse(TreeNode* node, process_func process) {
+		process(node->data);
+
+		TreeNode* current = node->first_child;
+		while(current) {
+			traverse(current, process);
+			current = current->next;
+		}
+	}
 };
 
+void process_print(int data) {
+	std::cout<<data<<" ";
+}
 
 int main() {
 	Tree tree;
@@ -135,6 +148,10 @@ int main() {
 	tree.print();
 	tree.add(35);
 	tree.print();
+
+	std::cout<<"traverse print"<<std::endl;
+	tree.traverse(tree.root,process_print);
+	std::cout<<std::endl;
 
 	std::cout << "remove 25" << std::endl;
 	tree.remove(tree.root->first_child);
