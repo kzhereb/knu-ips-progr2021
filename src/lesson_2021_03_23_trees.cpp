@@ -138,9 +138,11 @@ void process_print(int data) {
 	std::cout<<data<<" ";
 }
 
+namespace traverse_sum {
 int sum = 0;
 void process_sum_global(int data) {
 	sum += data;
+}
 }
 
 int main() {
@@ -159,14 +161,14 @@ int main() {
 	std::cout<<std::endl;
 
 	std::cout<<"traverse sum global"<<std::endl;
-	sum = 0;
-	tree.traverse(tree.root,process_sum_global);
-	std::cout<<"sum="<<sum<<std::endl;
+	traverse_sum::sum = 0;
+	tree.traverse(tree.root,traverse_sum::process_sum_global);
+	std::cout<<"sum="<<traverse_sum::sum<<std::endl;
 
 	std::cout<<"traverse sum global"<<std::endl;
-	sum = 0;
-	tree.traverse(tree.root,process_sum_global);
-	std::cout<<"sum="<<sum<<std::endl;
+	traverse_sum::sum = 0;
+	tree.traverse(tree.root,traverse_sum::process_sum_global);
+	std::cout<<"sum="<<traverse_sum::sum<<std::endl;
 
 	std::cout << "remove 25" << std::endl;
 	tree.remove(tree.root->first_child);
