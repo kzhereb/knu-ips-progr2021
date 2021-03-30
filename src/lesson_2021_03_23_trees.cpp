@@ -159,6 +159,12 @@ int main() {
 	std::cout<<std::endl;
 
 	std::cout<<"traverse sum global"<<std::endl;
+	sum = 0;
+	tree.traverse(tree.root,process_sum_global);
+	std::cout<<"sum="<<sum<<std::endl;
+
+	std::cout<<"traverse sum global"<<std::endl;
+	sum = 0;
 	tree.traverse(tree.root,process_sum_global);
 	std::cout<<"sum="<<sum<<std::endl;
 
