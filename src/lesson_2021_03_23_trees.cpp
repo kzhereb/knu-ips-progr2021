@@ -218,6 +218,13 @@ int main() {
 	});
 	std::cout<<std::endl;
 
+	std::cout<<"traverse sum static print with reset"<<std::endl;
+	process_sum_static_print_reset(0,true); // reset sum
+	tree.traverse(tree.root, [] (int data) { process_sum_static_print_reset(data);});
+	std::cout<<std::endl;
+
+
+
 	std::cout << "remove 25" << std::endl;
 	tree.remove(tree.root->first_child);
 	tree.print();
