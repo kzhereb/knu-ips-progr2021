@@ -145,6 +145,12 @@ void process_sum_global(int data) {
 }
 }
 
+void process_sum_static_print(int data) {
+	static int sum = 0;
+	sum += data;
+	std::cout<<"partial sum = "<<sum<<std::endl;
+}
+
 int main() {
 	Tree tree;
 
@@ -169,6 +175,10 @@ int main() {
 	traverse_sum::sum = 0;
 	tree.traverse(tree.root,traverse_sum::process_sum_global);
 	std::cout<<"sum="<<traverse_sum::sum<<std::endl;
+
+	std::cout<<"traverse sum static print"<<std::endl;
+	tree.traverse(tree.root,process_sum_static_print);
+	std::cout<<std::endl;
 
 	std::cout << "remove 25" << std::endl;
 	tree.remove(tree.root->first_child);
