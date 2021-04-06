@@ -180,6 +180,17 @@ void process_sum_static_ref_reset(int data, int& result, bool needs_reset=false)
 	result = sum;
 }
 
+struct Summator {
+	int sum;
+	Summator() {std::cout<<"ctor"<<std::endl; sum = 0;}
+	void operator()(int data) {
+		std::cout<<"sum="<<sum<<", data="<<data<<std::endl;
+		this->sum+= data;
+		std::cout<<"sum="<<sum<<std::endl;
+	}
+};
+
+
 int main() {
 	Tree tree;
 
@@ -258,6 +269,12 @@ int main() {
 		first_call = false;
 	});
 	std::cout<<"sum="<<sum<<std::endl;
+
+
+	std::cout<<"traverse sum functor"<<std::endl;
+	Summator summator;
+	tree.traverse_callable<Summator&>(tree.root,summator);
+	std::cout<<"sum="<<summator.sum<<std::endl;
 
 	std::cout << "remove 25" << std::endl;
 	tree.remove(tree.root->first_child);
