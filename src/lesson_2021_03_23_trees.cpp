@@ -139,7 +139,7 @@ struct Tree {
 
 		TreeNode* current = node->first_child;
 		while(current) {
-			traverse_callable(current, process);
+			traverse_callable<Callable>(current, process);
 			current = current->next;
 		}
 	}
@@ -183,8 +183,9 @@ void process_sum_static_ref_reset(int data, int& result, bool needs_reset=false)
 struct Summator {
 	int sum;
 	Summator() {std::cout<<"ctor"<<std::endl; sum = 0;}
+	Summator(const Summator& other) {std::cout<<"copy ctor"<<std::endl; sum = other.sum; }
 	void operator()(int data) {
-		std::cout<<"sum="<<sum<<", data="<<data<<std::endl;
+		std::cout<<"sum="<<sum<<", data="<<data<<", this="<<this<<std::endl;
 		this->sum+= data;
 		std::cout<<"sum="<<sum<<std::endl;
 	}
