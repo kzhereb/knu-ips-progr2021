@@ -132,6 +132,17 @@ struct Tree {
 			current = current->next;
 		}
 	}
+
+	template<typename Callable>
+	void traverse_callable(TreeNode* node, Callable process) {
+		process(node->data);
+
+		TreeNode* current = node->first_child;
+		while(current) {
+			traverse_callable(current, process);
+			current = current->next;
+		}
+	}
 };
 
 void process_print(int data) {
@@ -158,6 +169,15 @@ void process_sum_static_print_reset(int data, bool needs_reset=false) {
 	}
 	sum += data;
 	std::cout<<"partial sum = "<<sum<<std::endl;
+}
+
+void process_sum_static_ref_reset(int data, int& result, bool needs_reset=false) {
+	static int sum = 0;
+	if (needs_reset) {
+		sum = 0;
+	}
+	sum += data;
+	result = sum;
 }
 
 int main() {
@@ -224,6 +244,20 @@ int main() {
 	std::cout<<std::endl;
 
 
+	std::cout<<"traverse sum static ref with reset"<<std::endl;
+	int sum = 0;
+//	tree.traverse(tree.root, [&] (int data) { //ERROR: can't convert capturing lambda to function pointer
+//		static bool first_call = true;
+//		process_sum_static_ref_reset(data, sum, first_call);
+//		first_call = false;
+//	});
+
+	tree.traverse_callable(tree.root, [&] (int data) { //OK: template doesn't require function pointer, just any callable with correct signature
+		static bool first_call = true;
+		process_sum_static_ref_reset(data, sum, first_call);
+		first_call = false;
+	});
+	std::cout<<"sum="<<sum<<std::endl;
 
 	std::cout << "remove 25" << std::endl;
 	tree.remove(tree.root->first_child);
