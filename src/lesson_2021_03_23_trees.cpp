@@ -151,6 +151,15 @@ void process_sum_static_print(int data) {
 	std::cout<<"partial sum = "<<sum<<std::endl;
 }
 
+void process_sum_static_print_reset(int data, bool needs_reset=false) {
+	static int sum = 0;
+	if (needs_reset) {
+		sum = 0;
+	}
+	sum += data;
+	std::cout<<"partial sum = "<<sum<<std::endl;
+}
+
 int main() {
 	Tree tree;
 
@@ -178,6 +187,35 @@ int main() {
 
 	std::cout<<"traverse sum static print"<<std::endl;
 	tree.traverse(tree.root,process_sum_static_print);
+	std::cout<<std::endl;
+
+	std::cout<<"traverse sum static print"<<std::endl;
+	tree.traverse(tree.root,process_sum_static_print);
+	std::cout<<std::endl;
+
+	std::cout<<"traverse sum static print with reset"<<std::endl;
+	// tree.traverse(tree.root,process_sum_static_print_reset); // ERROR - wrong function signature
+	tree.traverse(tree.root, [] (int data) { process_sum_static_print_reset(data);});
+	std::cout<<std::endl;
+
+	std::cout<<"traverse sum static print with reset"<<std::endl;
+
+	// tree.traverse(tree.root, [] (int data) { process_sum_static_print_reset(data, true);}); // ERROR - resets on each step
+	tree.traverse(tree.root, [] (int data) {
+		static bool first_call = true;
+		process_sum_static_print_reset(data, first_call);
+		first_call = false;
+	});
+	std::cout<<std::endl;
+
+	std::cout<<"traverse sum static print with reset"<<std::endl;
+
+	// tree.traverse(tree.root, [] (int data) { process_sum_static_print_reset(data, true);}); // ERROR - resets on each step
+	tree.traverse(tree.root, [] (int data) {
+		static bool first_call = true;
+		process_sum_static_print_reset(data, first_call);
+		first_call = false;
+	});
 	std::cout<<std::endl;
 
 	std::cout << "remove 25" << std::endl;
