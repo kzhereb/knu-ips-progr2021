@@ -135,6 +135,11 @@ struct Tree {
 
 	template<typename Callable>
 	void traverse_callable(TreeNode* node, Callable process) {
+		traverse_callable_preorder<Callable>(node, process);
+	}
+
+	template<typename Callable>
+	void traverse_callable_preorder(TreeNode* node, Callable process) {
 		process(node->data);
 
 		TreeNode* current = node->first_child;
@@ -142,6 +147,16 @@ struct Tree {
 			traverse_callable<Callable>(current, process);
 			current = current->next;
 		}
+	}
+
+	template<typename Callable>
+	void traverse_callable_postorder(TreeNode* node, Callable process) {
+		TreeNode* current = node->first_child;
+		while(current) {
+			traverse_callable<Callable>(current, process);
+			current = current->next;
+		}
+		process(node->data);
 	}
 };
 
@@ -292,6 +307,11 @@ int main() {
 	summator.reset(); // use the same object, add method to reset
 	tree.traverse_callable<Summator&>(tree.root,summator);
 	std::cout<<"sum="<<summator.sum<<std::endl<<std::endl;
+
+
+	std::cout<<"traverse in postorder"<<std::endl;
+	tree.traverse_callable_postorder(tree.root, process_print);
+	std::cout<<std::endl<<std::endl;
 
 	std::cout << "remove 25" << std::endl;
 	tree.remove(tree.root->first_child);
