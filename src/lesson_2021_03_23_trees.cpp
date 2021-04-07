@@ -182,12 +182,10 @@ void process_sum_static_ref_reset(int data, int& result, bool needs_reset=false)
 
 struct Summator {
 	int sum;
-	Summator() {std::cout<<"ctor"<<std::endl; sum = 0;}
-	Summator(const Summator& other) {std::cout<<"copy ctor"<<std::endl; sum = other.sum; }
+	Summator() {sum = 0;}
+	Summator(const Summator& other) = delete;
 	void operator()(int data) {
-		std::cout<<"sum="<<sum<<", data="<<data<<", this="<<this<<std::endl;
 		this->sum+= data;
-		std::cout<<"sum="<<sum<<std::endl;
 	}
 };
 
@@ -275,7 +273,7 @@ int main() {
 	std::cout<<"traverse sum functor"<<std::endl;
 	Summator summator;
 	tree.traverse_callable<Summator&>(tree.root,summator);
-	std::cout<<"sum="<<summator.sum<<std::endl;
+	std::cout<<"sum="<<summator.sum<<std::endl<<std::endl;
 
 	std::cout << "remove 25" << std::endl;
 	tree.remove(tree.root->first_child);
