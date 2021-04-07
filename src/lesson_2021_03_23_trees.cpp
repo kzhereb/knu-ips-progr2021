@@ -187,6 +187,7 @@ struct Summator {
 	void operator()(int data) {
 		this->sum+= data;
 	}
+	void reset() { sum = 0;}
 };
 
 
@@ -272,6 +273,23 @@ int main() {
 
 	std::cout<<"traverse sum functor"<<std::endl;
 	Summator summator;
+	tree.traverse_callable<Summator&>(tree.root,summator);
+	std::cout<<"sum="<<summator.sum<<std::endl<<std::endl;
+
+	std::cout<<"traverse sum functor"<<std::endl;
+	Summator summator2; // use different object
+	tree.traverse_callable<Summator&>(tree.root,summator2);
+	std::cout<<"sum="<<summator2.sum<<std::endl<<std::endl;
+
+	std::cout<<"traverse sum functor"<<std::endl;
+	{
+		Summator summator; // create object inside scope, no confict with object outside this scope
+		tree.traverse_callable<Summator&>(tree.root, summator);
+		std::cout << "sum=" << summator.sum << std::endl << std::endl;
+	}
+
+	std::cout<<"traverse sum functor"<<std::endl;
+	summator.reset(); // use the same object, add method to reset
 	tree.traverse_callable<Summator&>(tree.root,summator);
 	std::cout<<"sum="<<summator.sum<<std::endl<<std::endl;
 
