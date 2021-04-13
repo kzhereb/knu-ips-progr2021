@@ -61,6 +61,41 @@ struct TreeNode {
 			return value;
 		}
 	}
+
+	int operation_priority() {
+		if (data == "+") {
+			return 2;
+		} else if (data == "-") {
+			return 2;
+		} else if (data == "*") {
+			return 1;
+		} else if (data == "/") {
+			return 1;
+		} else {
+			return -1; // for values and variables, we don't want to use parentheses, so priority should be the lowest
+		}
+	}
+
+	bool is_operation() {
+		return operation_priority() > 0;
+	}
+
+	std::string optional_parentheses(TreeNode* child) {
+		assert(child!=nullptr);
+		if (child->operation_priority() > this->operation_priority() ) {
+			return "(" + child->pretty_print_no_extra_parentheses() + ")";
+		} else {
+			return child->pretty_print_no_extra_parentheses();
+		}
+	}
+
+	std::string pretty_print_no_extra_parentheses() {
+		int priority = this->operation_priority();
+		if (priority < 0) { // not operation
+			return this->data;
+		}
+		return optional_parentheses(this->left) + this->data + optional_parentheses(this->right);
+	}
 };
 
 
@@ -69,6 +104,7 @@ int main() {
 
 
 	TreeNode* root = new TreeNode("+", new TreeNode("5"), new TreeNode("10"));
+	std::cout<<root->pretty_print_no_extra_parentheses()<<" = ";
 	std::cout<<root->calculate()<<std::endl;
 
 	VariableValues* vars = new VariableValues(2);
@@ -76,9 +112,13 @@ int main() {
 	vars->values[1] = {"y", 7};
 	TreeNode* with_vars = new TreeNode("*", new TreeNode("x"),
 			new TreeNode("+",new TreeNode("y"), new TreeNode("5")));
+	std::cout<<with_vars->pretty_print_no_extra_parentheses()<<" = ";
 	std::cout<<with_vars->calculate(vars)<<std::endl;
 
-
+	TreeNode* with_vars2 = new TreeNode("+", new TreeNode("x"),
+				new TreeNode("*",new TreeNode("y"), new TreeNode("5")));
+	std::cout<<with_vars2->pretty_print_no_extra_parentheses()<<" = ";
+	std::cout<<with_vars2->calculate(vars)<<std::endl;
 
 	return 0;
 }
