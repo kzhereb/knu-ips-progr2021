@@ -80,13 +80,40 @@ struct TreeNode {
 		return operation_priority() > 0;
 	}
 
+	bool is_associative() {
+		if (data == "+") {
+			return true;
+		} else if (data == "-") {
+			return false;
+		} else if (data == "*") {
+			return true;
+		} else if (data == "/") {
+			return false;
+		} else {
+			return true; // for values and variables, we don't want to use parentheses, so we consider them associative
+		}
+	}
+
 	std::string optional_parentheses(TreeNode* child) {
 		assert(child!=nullptr);
+		bool need_parentheses = false;
 		if (child->operation_priority() > this->operation_priority() ) {
+			need_parentheses = true;
+		} else if(child->operation_priority() == this->operation_priority()) {
+			if (child->is_associative() && this->is_associative()) {
+				need_parentheses = false;
+			} else {
+				need_parentheses = true;
+			}
+		} else {
+			need_parentheses = false;
+		}
+		if (need_parentheses) {
 			return "(" + child->pretty_print_no_extra_parentheses() + ")";
 		} else {
 			return child->pretty_print_no_extra_parentheses();
 		}
+
 	}
 
 	std::string pretty_print_no_extra_parentheses() {
@@ -119,6 +146,14 @@ int main() {
 				new TreeNode("*",new TreeNode("y"), new TreeNode("5")));
 	std::cout<<with_vars2->pretty_print_no_extra_parentheses()<<" = ";
 	std::cout<<with_vars2->calculate(vars)<<std::endl;
+
+
+	TreeNode* not_associative = new TreeNode("*",
+			new TreeNode("/",new TreeNode("x"), new TreeNode("5")),
+			new TreeNode("/",new TreeNode("y"), new TreeNode("1"))
+	);
+	std::cout<<not_associative->pretty_print_no_extra_parentheses()<<" = ";
+	std::cout<<not_associative->calculate(vars)<<std::endl;
 
 	return 0;
 }
