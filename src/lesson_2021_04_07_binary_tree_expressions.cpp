@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <string>
+#include <cctype>
 #include <cassert>
 
 namespace lesson_2021_04_07_binary_tree_expressions {
@@ -122,8 +123,25 @@ struct TreeNode {
 		}
 		return optional_parentheses(this->left) + this->data + optional_parentheses(this->right);
 	}
+
+
 };
 
+TreeNode* parse_expression(std::string expression) {
+	enum Mode {Number, Variable, Start};
+	std::string current_token;
+	Mode current_mode;
+	for(std::size_t i = 0; i<expression.length(); i++) {
+		char current_char = expression[i];
+		if (std::isdigit(current_char)) {
+			if (current_mode == Number || current_mode == Variable) {
+				current_token += current_char;
+			}
+		} else if (std::isalpha(current_char)) {
+			//...
+		}
+	}
+}
 
 
 int main() {
