@@ -117,8 +117,7 @@ struct TreeNode {
 	}
 
 	std::string pretty_print_no_extra_parentheses() {
-		int priority = this->operation_priority();
-		if (priority < 0) { // not operation
+		if (! this->is_operation()) {
 			return this->data;
 		}
 		return optional_parentheses(this->left) + this->data + optional_parentheses(this->right);
