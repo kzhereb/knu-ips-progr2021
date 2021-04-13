@@ -74,7 +74,8 @@ int main() {
 	VariableValues* vars = new VariableValues(2);
 	vars->values[0] = {"x", 10};
 	vars->values[1] = {"y", 7};
-	TreeNode* with_vars = new TreeNode("*", new TreeNode("x"), new TreeNode("y"));
+	TreeNode* with_vars = new TreeNode("*", new TreeNode("x"),
+			new TreeNode("+",new TreeNode("y"), new TreeNode("5")));
 	std::cout<<with_vars->calculate(vars)<<std::endl;
 
 
