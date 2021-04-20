@@ -6,7 +6,7 @@
  */
 #include <iostream>
 
-#define current_namespace lesson_2021_04_07_binary_tree_expressions
+#define current_namespace lesson_2021_04_21_graph
 
 namespace current_namespace {
 	int main();
