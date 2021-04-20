@@ -122,6 +122,23 @@ struct AdjacentStructureGraph {
 		}
 	}
 
+	void remove_edge(std::size_t start_vertex, std::size_t end_vertex) {
+		GraphNode* current = this->edges[start_vertex];
+		GraphNode* previous = nullptr;
+		while(current && current->end_vertex < end_vertex) {
+			previous = current;
+			current = current->next;
+		}
+		if (current && current->end_vertex == end_vertex) {
+			if (previous) {
+				previous->next = current->next;
+			} else {
+				this->edges[start_vertex] = current->next;
+			}
+			delete current;
+		}
+	}
+
 	void print_edges() {
 		for(std::size_t i = 0; i < size; i++){
 			GraphNode* current = this->edges[i];
@@ -158,6 +175,9 @@ int main() {
 	graph2.add_edge(2,0);
 
 	//graph2.print_matrix();
+	graph2.print_edges();
+	std::cout<<"remove edge 2->3"<<std::endl;
+	graph2.remove_edge(2,3);
 	graph2.print_edges();
 
 	return 0;
