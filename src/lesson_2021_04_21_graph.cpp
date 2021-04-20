@@ -56,7 +56,7 @@ struct AdjacentMatrixGraph {
 			bool has_edges = false;
 			for(std::size_t j = 0; j < size; j++) {
 				if (matrix[i][j]) {
-					std::cout<<i<<"->"<<j<<", ";
+					std::cout<<i<<"->"<<j<<" ";
 					has_edges = true;
 				}
 			}
@@ -82,6 +82,7 @@ int main() {
 	std::cout<<"remove edge 2->3"<<std::endl;
 	graph1.remove_edge(2,3);
 	graph1.print_matrix();
+	graph1.print_edges();
 
 
 
