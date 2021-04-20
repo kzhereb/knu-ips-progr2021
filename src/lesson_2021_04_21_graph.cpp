@@ -67,10 +67,77 @@ struct AdjacentMatrixGraph {
 	}
 };
 
+struct GraphNode {
+	std::size_t end_vertex;
+	GraphNode* next;
+	GraphNode(std::size_t end_vertex, GraphNode* next = nullptr) {
+		this->end_vertex = end_vertex;
+		this->next = next;
+	}
+};
+
+struct AdjacentStructureGraph {
+	GraphNode **edges;
+	std::size_t size;
+
+	AdjacentStructureGraph(std::size_t size) {
+		this->size = size;
+		this->edges = new GraphNode*[size];
+		for(std::size_t i = 0; i<size; i++) {
+			this->edges[i] = nullptr;
+		}
+	}
+
+	~AdjacentStructureGraph() {
+		for(std::size_t i = 0; i<size; i++) {
+			GraphNode* current = this->edges[i];
+			while(current) {
+				GraphNode* to_delete = current;
+				current = current->next;
+				delete to_delete;
+			}
+		}
+		delete [] this->edges;
+	}
+
+	void add_edge(std::size_t start_vertex, std::size_t end_vertex) {
+		GraphNode* current = this->edges[start_vertex];
+		if (current) {
+			if (current->end_vertex > end_vertex) {
+				GraphNode* new_node = new GraphNode(end_vertex, current);
+				this->edges[start_vertex] = new_node;
+				return;
+			}
+		} else {
+			GraphNode* new_node = new GraphNode(end_vertex);
+			this->edges[start_vertex] = new_node;
+			return;
+		}
+		while(current) {
+			if (current->next == nullptr || end_vertex > current->next->end_vertex) {
+				GraphNode* new_node = new GraphNode(end_vertex, current->next);
+				current->next = new_node;
+				return;
+			}
+		}
+	}
+
+	void print_edges() {
+		for(std::size_t i = 0; i < size; i++){
+			GraphNode* current = this->edges[i];
+			if (current == nullptr) { continue;}
+			while(current) {
+				std::cout<<i<<"->"<<current->end_vertex<<" ";
+				current = current->next;
+			}
+			std::cout<<std::endl;
+		}
+	}
+};
 
 
 int main() {
-
+	std::cout<<"Matrix:"<<std::endl;
 	AdjacentMatrixGraph graph1(4);
 	graph1.add_edge(0,1);
 	graph1.add_edge(2,3);
@@ -84,8 +151,14 @@ int main() {
 	graph1.print_matrix();
 	graph1.print_edges();
 
+	std::cout<<"Adjacent structure (linked list of connected vertices):"<<std::endl;
+	AdjacentMatrixGraph graph2(4);
+	graph2.add_edge(0,1);
+	graph2.add_edge(2,3);
+	graph2.add_edge(2,0);
 
-
+	//graph2.print_matrix();
+	graph2.print_edges();
 
 	return 0;
 }
