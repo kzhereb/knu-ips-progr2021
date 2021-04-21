@@ -139,7 +139,7 @@ struct AdjacentStructureGraph {
 		}
 	}
 
-	void print_matrix() {
+	void print_matrix_inefficient() {
 		for(std::size_t start_vertex = 0; start_vertex < size; start_vertex++){
 			GraphNode* current = this->edges[start_vertex];
 			std::size_t end_vertex = 0;
@@ -165,7 +165,20 @@ struct AdjacentStructureGraph {
 		}
 	}
 
-
+	void print_matrix() {
+		for(std::size_t start_vertex = 0; start_vertex < size; start_vertex++){
+			GraphNode* current = this->edges[start_vertex];
+			for(std::size_t end_vertex = 0; end_vertex < size; end_vertex++){
+				if (current && current->end_vertex == end_vertex) {
+					std::cout<<"1 ";
+					current = current->next;
+				} else {
+					std::cout<<"0 ";
+				}
+			}
+			std::cout<<std::endl;
+		}
+	}
 
 	void print_edges() {
 		for(std::size_t i = 0; i < size; i++){
