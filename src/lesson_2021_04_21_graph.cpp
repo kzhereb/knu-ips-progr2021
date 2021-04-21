@@ -4,6 +4,8 @@
  *  Created on: Apr 20, 2021
  *      Author: KZ
  */
+
+#include "queue.h"
 #include <iostream>
 #include <cassert>
 
@@ -191,8 +193,58 @@ struct AdjacentStructureGraph {
 			std::cout<<std::endl;
 		}
 	}
+
+	template<typename Callable>
+	void breadth_first_all(Callable process) {
+		bool* already_processed = new bool[size];
+		for(std::size_t i = 0; i< size; i++) {
+			already_processed[i] = false;
+		}
+		for(std::size_t start_vertex = 0; start_vertex<size; start_vertex++) {
+			if (already_processed[start_vertex]) {continue;}
+			breadth_first_impl(start_vertex, process, already_processed);
+		}
+		delete [] already_processed;
+	}
+
+	template<typename Callable>
+	void breadth_first_single_component(std::size_t start_vertex, Callable process) {
+		assert(start_vertex < size);
+		bool* already_processed = new bool[size];
+		for(std::size_t i = 0; i< size; i++) {
+			already_processed[i] = false;
+		}
+		breadth_first_impl(start_vertex, process, already_processed);
+		delete [] already_processed;
+	}
+
+private:
+	template<typename Callable>
+	void breadth_first_impl(std::size_t start_vertex, Callable process, bool* already_processed) {
+		Queue<std::size_t> to_visit;
+		to_visit.enqueue(start_vertex);
+		already_processed[start_vertex] = true;
+		while(! to_visit.is_empty() ) {
+			std::size_t current_vertex = to_visit.dequeue();
+			process(current_vertex);
+
+			GraphNode* current = this->edges[current_vertex];
+			while(current) {
+				std::size_t end_vertex = current->end_vertex;
+				current = current->next;
+				if (already_processed[end_vertex]) {continue;}
+
+				to_visit.enqueue(end_vertex);
+				already_processed[end_vertex] = true;
+			}
+		}
+	}
+
 };
 
+void process_print(std::size_t vertex) {
+	std::cout<<"Visited vertex "<<vertex<<std::endl;
+}
 
 int main() {
 	std::cout<<"Matrix:"<<std::endl;
@@ -217,6 +269,11 @@ int main() {
 
 	graph2.print_matrix();
 	graph2.print_edges();
+
+	std::cout<<"BFS all"<<std::endl;
+	graph2.breadth_first_all(process_print);
+	std::cout<<"BFS starting from 2"<<std::endl;
+	graph2.breadth_first_single_component(2,process_print);
 
 	std::cout<<"remove edge 2->3"<<std::endl;
 	graph2.remove_edge(2,3);
