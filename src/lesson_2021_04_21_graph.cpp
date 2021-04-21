@@ -158,9 +158,14 @@ struct AdjacentStructureGraph {
 				end_vertex++;
 				if (end_vertex >= size) { break;}
 			}
+			for (std::size_t j = end_vertex; j<size; j++) {
+				std::cout<<"0 ";
+			}
 			std::cout<<std::endl;
 		}
 	}
+
+
 
 	void print_edges() {
 		for(std::size_t i = 0; i < size; i++){
@@ -192,7 +197,7 @@ int main() {
 	graph1.print_edges();
 
 	std::cout<<"Adjacent structure (linked list of connected vertices):"<<std::endl;
-	AdjacentMatrixGraph graph2(4);
+	AdjacentStructureGraph graph2(4);
 	graph2.add_edge(0,1);
 	graph2.add_edge(2,3);
 	graph2.add_edge(2,0);
