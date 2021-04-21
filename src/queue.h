@@ -195,6 +195,10 @@ struct Queue {
 
 		return result;
 	}
+
+	bool is_empty() {
+		return begin == nullptr;
+	}
 };
 
 
