@@ -69,6 +69,39 @@ struct AdjacentMatrixGraph {
 	}
 };
 
+bool get_bit(unsigned bit_vector, std::size_t index) {
+	return (bit_vector >> index) & 1;
+}
+void set_bit(unsigned& bit_vector, std::size_t index, bool value) {
+	if (value) {
+		unsigned mask = 1 << index;
+		bit_vector |= mask;
+	}
+}
+
+struct BitVectorGraph {
+	unsigned * matrix_rows;
+	std::size_t size;
+	BitVectorGraph(std::size_t size) {
+		this->size = size;
+		this->matrix_rows = new unsigned[size];
+		for (std::size_t i = 0; i<size; i++) {
+			this->matrix_rows[i] = 0;
+		}
+	}
+	~BitVectorGraph() {
+		delete [] this->matrix_rows;
+	}
+	void add_edge(std::size_t start_vertex, std::size_t end_vertex) {
+		assert(start_vertex < size);
+		assert(end_vertex < size);
+		//this->matrix[start_vertex][end_vertex] = 1;
+	}
+
+
+};
+
+
 struct GraphNode {
 	std::size_t end_vertex;
 	GraphNode* next;
@@ -285,6 +318,15 @@ void process_print(std::size_t vertex) {
 }
 
 int main() {
+
+	std::cout<<"bit vector operations"<<std::endl;
+	unsigned bit_vector = 0;
+	std::cout<<get_bit(bit_vector, 3)<<std::endl;
+	set_bit(bit_vector, 3, true);
+	std::cout<<get_bit(bit_vector, 3)<<std::endl;
+
+
+
 	std::cout<<"Matrix:"<<std::endl;
 	AdjacentMatrixGraph graph1(4);
 	graph1.add_edge(0,1);
