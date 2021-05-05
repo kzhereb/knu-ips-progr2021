@@ -73,9 +73,12 @@ bool get_bit(unsigned bit_vector, std::size_t index) {
 	return (bit_vector >> index) & 1;
 }
 void set_bit(unsigned& bit_vector, std::size_t index, bool value) {
+	unsigned mask = 1 << index;
 	if (value) {
-		unsigned mask = 1 << index;
 		bit_vector |= mask;
+	} else {
+		mask = ~mask;
+		bit_vector &= mask;
 	}
 }
 
@@ -319,10 +322,26 @@ void process_print(std::size_t vertex) {
 
 int main() {
 
+	std::cout<<"shift operations"<<std::endl;
+	unsigned char bits = 0b1010;
+	std::cout<<(unsigned)bits<<std::endl;
+	std::cout<< 0b10100<<"="<< (bits << 1) <<std::endl;
+	std::cout<< 0b1010000<<"="<< (bits << 3) <<std::endl;
+	std::cout<< 0b10100000<<"="<< (bits << 4) <<std::endl;
+	unsigned char shifted = bits << 5;
+	std::cout<< 0b01000000<<"="<< (unsigned)shifted <<std::endl;
+
+	std::cout<< 0b101<<"="<< (bits >> 1) <<std::endl;
+	std::cout<< 0b10<<"="<< (bits >> 2) <<std::endl;
+	std::cout<< 0b1<<"="<< (bits >> 3) <<std::endl;
+	std::cout<< 0b0<<"="<< (bits >> 4) <<std::endl;
+
 	std::cout<<"bit vector operations"<<std::endl;
 	unsigned bit_vector = 0;
 	std::cout<<get_bit(bit_vector, 3)<<std::endl;
 	set_bit(bit_vector, 3, true);
+	std::cout<<get_bit(bit_vector, 3)<<std::endl;
+	set_bit(bit_vector, 3, false);
 	std::cout<<get_bit(bit_vector, 3)<<std::endl;
 
 
