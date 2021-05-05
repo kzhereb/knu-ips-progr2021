@@ -101,6 +101,12 @@ struct BitVectorGraph {
 		//this->matrix[start_vertex][end_vertex] = 1;
 		set_bit(this->matrix_rows[start_vertex], end_vertex, 1);
 	}
+	void remove_edge(std::size_t start_vertex, std::size_t end_vertex) {
+		assert(start_vertex < size);
+		assert(end_vertex < size);
+		//this->matrix[start_vertex][end_vertex] = 0;
+		set_bit(this->matrix_rows[start_vertex], end_vertex, 0);
+	}
 
 	void print_matrix() {
 		for(std::size_t i = 0; i < size; i++) {
@@ -111,6 +117,23 @@ struct BitVectorGraph {
 			std::cout<<std::endl;
 		}
 	}
+
+	void print_edges() {
+		for(std::size_t i = 0; i < size; i++) {
+			bool has_edges = false;
+			for(std::size_t j = 0; j < size; j++) {
+				//if (matrix[i][j]) {
+				if (get_bit(this->matrix_rows[i],j)) {
+					std::cout<<i<<"->"<<j<<" ";
+					has_edges = true;
+				}
+			}
+			if (has_edges) {
+				std::cout<<std::endl;
+			}
+		}
+	}
+
 
 
 };
@@ -405,12 +428,12 @@ int main() {
 	graph3.add_edge(2,0);
 
 	graph3.print_matrix();
-//	graph3.print_edges();
+	graph3.print_edges();
 
-//	std::cout<<"remove edge 2->3"<<std::endl;
-//	graph3.remove_edge(2,3);
-//	graph3.print_matrix();
-//	graph3.print_edges();
+	std::cout<<"remove edge 2->3"<<std::endl;
+	graph3.remove_edge(2,3);
+	graph3.print_matrix();
+	graph3.print_edges();
 
 	return 0;
 }
