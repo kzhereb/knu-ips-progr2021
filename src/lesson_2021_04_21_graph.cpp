@@ -86,6 +86,8 @@ struct BitVectorGraph {
 	unsigned * matrix_rows;
 	std::size_t size;
 	BitVectorGraph(std::size_t size) {
+		assert(size <= sizeof(unsigned));
+
 		this->size = size;
 		this->matrix_rows = new unsigned[size];
 		for (std::size_t i = 0; i<size; i++) {
