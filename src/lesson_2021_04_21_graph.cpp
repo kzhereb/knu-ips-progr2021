@@ -99,6 +99,17 @@ struct BitVectorGraph {
 		assert(start_vertex < size);
 		assert(end_vertex < size);
 		//this->matrix[start_vertex][end_vertex] = 1;
+		set_bit(this->matrix_rows[start_vertex], end_vertex, 1);
+	}
+
+	void print_matrix() {
+		for(std::size_t i = 0; i < size; i++) {
+			for(std::size_t j = 0; j < size; j++) {
+				//std::cout<< matrix[i][j]<<" ";
+				std::cout<< get_bit(this->matrix_rows[i],j)<<" ";
+			}
+			std::cout<<std::endl;
+		}
 	}
 
 
@@ -384,6 +395,22 @@ int main() {
 
 	graph2.print_matrix();
 	graph2.print_edges();
+
+
+
+	std::cout<<"Bit Vector:"<<std::endl;
+	BitVectorGraph graph3(4);
+	graph3.add_edge(0,1);
+	graph3.add_edge(2,3);
+	graph3.add_edge(2,0);
+
+	graph3.print_matrix();
+//	graph3.print_edges();
+
+//	std::cout<<"remove edge 2->3"<<std::endl;
+//	graph3.remove_edge(2,3);
+//	graph3.print_matrix();
+//	graph3.print_edges();
 
 	return 0;
 }
