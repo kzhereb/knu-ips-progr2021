@@ -44,8 +44,8 @@ TreeNode* build_from_sorted_array(int* array, std::size_t size) {
 	}
 	std::size_t middle = size/2;
 	return new TreeNode(array[middle],
-			build_from_sorted_array(&array[0], middle),
-			build_from_sorted_array(&array[middle + 1], size - middle - 1)
+			build_from_sorted_array(array, middle),
+			build_from_sorted_array(array + middle + 1, size - middle - 1) //&array[middle + 1]
 			);
 }
 
