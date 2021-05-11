@@ -36,6 +36,24 @@ struct TreeNode {
 
 
 	}
+
+	TreeNode* find_recursive(int key){
+		if (key == data) {
+			return this;
+		} else if (key < data) {
+			if (left) {
+				return left->find_recursive(key);
+			} else {
+				return nullptr;
+			}
+		} else if (key > data) {
+			if (right) {
+				return right->find_recursive(key);
+			} else {
+				return nullptr;
+			}
+		}
+	}
 };
 
 TreeNode* build_from_sorted_array(int* array, std::size_t size) {
@@ -58,6 +76,14 @@ struct BinarySearchTree {
 		root = build_from_sorted_array(array, size);
 	}
 
+	TreeNode* find_recursive(int key) {
+		if (root) {
+			return root->find_recursive(key);
+		} else {
+			return nullptr;
+		}
+	}
+
 	void print_as_tree() {
 		if (root) {
 			root->print_as_tree();
@@ -66,6 +92,8 @@ struct BinarySearchTree {
 		}
 		std::cout<<std::endl;
 	}
+
+
 
 };
 
@@ -76,6 +104,15 @@ int main() {
 
 	BinarySearchTree tree(array, size);
 	tree.print_as_tree();
+
+	TreeNode* found = tree.find_recursive(7);
+	std::cout<<"searching for 7: ";
+	found->print_as_tree();
+	std::cout<<std::endl;
+
+	found = tree.find_recursive(8);
+	std::cout<<"searching for 8: ";
+	std::cout<<found<<std::endl;
 
 	return 0;
 }
