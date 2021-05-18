@@ -101,6 +101,41 @@ struct BinarySearchTree {
 		return find_recursive_func(root, key);
 	}
 
+	TreeNode* find_not_recursive_v1_warn(int key) {
+		TreeNode* current = this->root;
+		while (current) {
+			if (key == current->data) {
+				return current;
+			} else if (key < current->data) {
+				if (current->left) {
+					current = current->left;
+				} else {
+					return nullptr;
+				}
+			} else if (key > current->data) {
+				if (current->right) {
+					current = current->right;
+				} else {
+					return nullptr;
+				}
+			}
+		}
+	}
+
+	TreeNode* find_not_recursive(int key) {
+		TreeNode* current = this->root;
+		while (current) {
+			if (key == current->data) {
+				return current;
+			} else if (key < current->data) {
+				current = current->left;
+			} else if (key > current->data) {
+				current = current->right;
+			}
+		}
+		return nullptr;
+	}
+
 	void print_as_tree() {
 		if (root) {
 			root->print_as_tree();
@@ -128,6 +163,15 @@ int main() {
 	std::cout<<std::endl;
 
 	found = tree.find_recursive(8);
+	std::cout<<"searching for 8: ";
+	std::cout<<found<<std::endl;
+
+	found = tree.find_not_recursive(7);
+	std::cout<<"searching for 7: ";
+	found->print_as_tree();
+	std::cout<<std::endl;
+
+	found = tree.find_not_recursive(8);
 	std::cout<<"searching for 8: ";
 	std::cout<<found<<std::endl;
 
