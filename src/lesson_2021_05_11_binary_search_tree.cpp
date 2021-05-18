@@ -169,8 +169,97 @@ struct BinarySearchTree {
 		}
 	}
 
-	TreeNode* find_iterative(int key) {
+
+	TreeNode* find_iterative_v3(int key) {
 		return find_iterative_func(this->root, key);
+	}
+
+    TreeNode* find_non_recursive_v4(int key)
+    {
+        TreeNode* node = root;
+        while (node) // better add {} here, or later changes make introduce subtle and hard to find bugs
+            if (node->data > key)
+                node = node->right;
+            else if (node->data < key)
+                node = node->left;
+            else
+                return node;
+        return nullptr;
+    }
+
+    TreeNode* find_key_v5(int key)
+    {
+        TreeNode* current = root;
+        while (current != NULL)
+        {
+            if (current->data == key) return current;
+            if (key < current->data) current = current->left;
+            else current = current->right;
+        }
+        return nullptr;
+    }
+
+	TreeNode* find_func_v6_errors(int key) {
+		if (root) {
+			if (key == root->data) {
+				return root;
+			} else { // ERROR: accessing root without check for nullptr
+				while (key < root->data) { // ERROR: works only for always left or always right, not in general case
+					root=root->left; // ERROR: changes root
+				}
+				while (key > root->data) {
+					root=root->right;
+				}
+			}
+			if (key == root->data) {
+				return root;
+			}
+
+			return nullptr;
+		}
+	}
+
+	TreeNode* find_func_v6(int key) {
+		if (root) {
+			if (key == root->data) {
+				return root;
+			} else {
+				while (root && key < root->data) {
+					root=root->left;
+				}
+				while (root && key > root->data) {
+					root=root->right;
+				}
+			}
+			if (root && key == root->data) {
+				return root;
+			}
+
+			return nullptr;
+		}
+	}
+
+    TreeNode* find_nonrecursive_v7(int key)
+    {
+        TreeNode* node = root;
+        while (node != NULL)
+        {
+            if (node->data == key)
+            {
+                return node;
+            }
+            if (key < node->data)
+            {
+                node = node->left;
+            }
+            else{ node = node->right;
+            }
+        }
+        return nullptr;}
+
+
+	TreeNode* find_iterative(int key) {
+		return find_iterative_v3(key);
 	}
 
 	void print_as_tree() {
