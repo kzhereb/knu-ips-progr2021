@@ -193,6 +193,7 @@ struct AdjacentStructureGraph {
 				current->next = new_node;
 				return;
 			}
+			current = current->next;
 		}
 	}
 
