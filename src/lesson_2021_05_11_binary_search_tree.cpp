@@ -70,6 +70,19 @@ TreeNode* find_recursive_func(TreeNode* root, int key) {
 	}
 }
 
+TreeNode* find_iterative_func(TreeNode* root, int key) {
+	TreeNode* current = root;
+	while (current && current->data != key) {
+		if (key < current->data) {
+			current = current->left;
+		}
+		else if (key > current->data) {
+			current = current->right;
+		}
+	}
+	return current;
+}
+
 TreeNode* build_from_sorted_array(int* array, std::size_t size) {
 	if (size == 0) {
 		return nullptr;
@@ -122,7 +135,7 @@ struct BinarySearchTree {
 		}
 	}
 
-	TreeNode* find_not_recursive(int key) {
+	TreeNode* find_not_recursive_v1(int key) {
 		TreeNode* current = this->root;
 		while (current) {
 			if (key == current->data) {
@@ -134,6 +147,30 @@ struct BinarySearchTree {
 			}
 		}
 		return nullptr;
+	}
+
+	TreeNode* find_not_recursive_v2(int key) {
+
+		TreeNode* current = root;
+		if (current != nullptr) { // Extra check not needed
+			while (current) {
+				if (key == current->data) {
+					return current;
+				} else if (key < current->data) {
+					current = current->left;
+				} else if (key > current->data) {
+					current = current->right;
+				}
+			}
+			//if (current == nullptr) //WARNING: if uncommented, results in "not all code paths return value"
+				return nullptr;
+		} else {
+			return nullptr;
+		}
+	}
+
+	TreeNode* find_iterative(int key) {
+		return find_iterative_func(this->root, key);
 	}
 
 	void print_as_tree() {
@@ -166,12 +203,12 @@ int main() {
 	std::cout<<"searching for 8: ";
 	std::cout<<found<<std::endl;
 
-	found = tree.find_not_recursive(7);
+	found = tree.find_iterative(7);
 	std::cout<<"searching for 7: ";
 	found->print_as_tree();
 	std::cout<<std::endl;
 
-	found = tree.find_not_recursive(8);
+	found = tree.find_iterative(8);
 	std::cout<<"searching for 8: ";
 	std::cout<<found<<std::endl;
 
