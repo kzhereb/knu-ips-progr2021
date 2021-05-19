@@ -6,6 +6,7 @@
  */
 
 #include <iostream>
+#include <cassert>
 
 namespace lesson_2021_05_11_binary_search_tree {
 
@@ -77,6 +78,17 @@ struct TreeNode {
 			}
 		}
 	}
+
+	TreeNode*& find_previous_child() {
+		TreeNode*& current = this->left;
+		if (!current) { return current; } //no previous child
+		while(current->right) {
+			current = current->right;
+		}
+		return current;
+	}
+
+
 };
 
 TreeNode* find_recursive_func(TreeNode* root, int key) {
@@ -106,6 +118,45 @@ TreeNode* find_iterative_func(TreeNode* root, int key) {
 	return current;
 }
 
+bool remove_func(TreeNode*& node, int key) {
+	if (key == node->data) {
+		if (node->left) {
+			if (node->right) { //both children present
+				TreeNode*& previous = node->find_previous_child();
+				assert(previous != nullptr);
+				node->data = previous->data;
+				remove_func(previous, previous->data);
+
+			} else {
+				node->data = node->left->data;
+				remove_func(node->left, node->left->data);
+			}
+		} else {
+			if (node->right) {
+				node->data = node->right->data;
+				remove_func(node->right, node->right->data);
+			} else { // no children
+				TreeNode* to_delete = node;
+				node = nullptr;
+				delete to_delete;
+			}
+		}
+		return true;
+	} else if (key < node->data) {
+		if (node->left) {
+			return remove_func(node->left, key);
+		} else {
+			return false;
+		}
+	} else if (key > node->data) {
+		if (node->right) {
+			return remove_func(node->right, key);
+		} else {
+			return false;
+		}
+	}
+}
+
 TreeNode* build_from_sorted_array(int* array, std::size_t size) {
 	if (size == 0) {
 		return nullptr;
@@ -133,6 +184,10 @@ struct BinarySearchTree {
 			this->root = new TreeNode(key);
 			return this->root;
 		}
+	}
+
+	bool remove(int key) {
+		return remove_func(this->root, key);
 	}
 
 	TreeNode* find_recursive_verbose(int key) {
@@ -334,6 +389,13 @@ int main() {
 	std::cout<<found<<std::endl;
 
 	tree.insert(4);
+	tree.print_as_tree();
+
+	if (tree.remove(2)) {
+		std::cout<<"removed 2"<<std::endl;
+	} else {
+		std::cout<<"could not remove 2"<<std::endl;
+	}
 	tree.print_as_tree();
 
 	return 0;
