@@ -118,6 +118,45 @@ TreeNode* find_iterative_func(TreeNode* root, int key) {
 	return current;
 }
 
+bool remove_func_inefficient(TreeNode*& node, int key) {
+	if (key == node->data) {
+		if (node->left) {
+			if (node->right) { //both children present
+				TreeNode*& previous = node->find_previous_child();
+				assert(previous != nullptr);
+				node->data = previous->data;
+				remove_func_inefficient(previous, previous->data);
+
+			} else {
+				node->data = node->left->data;
+				remove_func_inefficient(node->left, node->left->data);
+			}
+		} else {
+			if (node->right) {
+				node->data = node->right->data;
+				remove_func_inefficient(node->right, node->right->data);
+			} else { // no children
+				TreeNode* to_delete = node;
+				node = nullptr;
+				delete to_delete;
+			}
+		}
+		return true;
+	} else if (key < node->data) {
+		if (node->left) {
+			return remove_func_inefficient(node->left, key);
+		} else {
+			return false;
+		}
+	} else if (key > node->data) {
+		if (node->right) {
+			return remove_func_inefficient(node->right, key);
+		} else {
+			return false;
+		}
+	}
+}
+
 bool remove_func(TreeNode*& node, int key) {
 	if (key == node->data) {
 		if (node->left) {
@@ -128,13 +167,15 @@ bool remove_func(TreeNode*& node, int key) {
 				remove_func(previous, previous->data);
 
 			} else {
-				node->data = node->left->data;
-				remove_func(node->left, node->left->data);
+				TreeNode* to_delete = node;
+				node = node->left;
+				delete to_delete;
 			}
 		} else {
 			if (node->right) {
-				node->data = node->right->data;
-				remove_func(node->right, node->right->data);
+				TreeNode* to_delete = node;
+				node = node->right;
+				delete to_delete;
 			} else { // no children
 				TreeNode* to_delete = node;
 				node = nullptr;
@@ -156,6 +197,7 @@ bool remove_func(TreeNode*& node, int key) {
 		}
 	}
 }
+
 
 TreeNode* build_from_sorted_array(int* array, std::size_t size) {
 	if (size == 0) {
