@@ -54,6 +54,29 @@ struct TreeNode {
 			}
 		}
 	}
+
+	TreeNode* insert(int key) {
+		if (key == this->data) {
+			// don't add duplicate keys
+			return this;
+		} else if (key < this->data) {
+			if (this->left) {
+				return this->left->insert(key);
+			} else {
+				TreeNode* new_node = new TreeNode(key);
+				this->left = new_node;
+				return new_node;
+			}
+		} else if (key > this->data) {
+			if (this->right) {
+				return this->right->insert(key);
+			} else {
+				TreeNode* new_node = new TreeNode(key);
+				this->right = new_node;
+				return new_node;
+			}
+		}
+	}
 };
 
 TreeNode* find_recursive_func(TreeNode* root, int key) {
@@ -101,6 +124,15 @@ struct BinarySearchTree {
 	}
 	BinarySearchTree(int* array, std::size_t size){
 		root = build_from_sorted_array(array, size);
+	}
+
+	TreeNode* insert(int key) {
+		if (this->root) {
+			return this->root->insert(key);
+		} else {
+			this->root = new TreeNode(key);
+			return this->root;
+		}
 	}
 
 	TreeNode* find_recursive_verbose(int key) {
@@ -300,6 +332,9 @@ int main() {
 	found = tree.find_iterative(8);
 	std::cout<<"searching for 8: ";
 	std::cout<<found<<std::endl;
+
+	tree.insert(4);
+	tree.print_as_tree();
 
 	return 0;
 }
